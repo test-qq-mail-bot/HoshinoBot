@@ -61,6 +61,8 @@ def get_user_priv(ev: CQEvent):
                 return NORMAL
             elif role == 'admin':
                 return ADMIN
+            elif role == 'administrater':
+                return ADMIN
             elif role == 'owner':
                 return OWNER
         return NORMAL
