@@ -48,10 +48,11 @@ def dump_pool_config():
 gacha_10_aliases = ('抽十连', '十连', '十连！', '十连抽', '来个十连', '来发十连', '来次十连', '抽个十连', '抽发十连', '抽次十连', '十连扭蛋', '扭蛋十连',
                     '10连', '10连！', '10连抽', '来个10连', '来发10连', '来次10连', '抽个10连', '抽发10连', '抽次10连', '10连扭蛋', '扭蛋10连',
                     '十連', '十連！', '十連抽', '來個十連', '來發十連', '來次十連', '抽個十連', '抽發十連', '抽次十連', '十連轉蛋', '轉蛋十連',
-                    '10連', '10連！', '10連抽', '來個10連', '來發10連', '來次10連', '抽個10連', '抽發10連', '抽次10連', '10連轉蛋', '轉蛋10連')
+                    '10連', '10連！', '10連抽', '來個10連', '來發10連', '來次10連', '抽個10連', '抽發10連', '抽次10連', '10連轉蛋', '轉蛋10連',
+                    '来十连', '来一发十连')
 gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋',
                    '單抽', '單抽！', '來發單抽', '來個單抽', '來次單抽', '轉蛋單抽', '單抽轉蛋')
-gacha_300_aliases = ('抽一井', '来一井', '来发井', '抽发井', '天井扭蛋', '扭蛋天井', '天井轉蛋', '轉蛋天井')
+gacha_300_aliases = ('抽一井', '来一井', '一井', '来发井', '抽发井', '天井扭蛋', '扭蛋天井', '天井轉蛋', '轉蛋天井')
 
 @sv.on_fullmatch(('卡池资讯', '查看卡池', '看看卡池', '康康卡池', '卡池資訊', '看看up', '看看UP'))
 async def gacha_info(bot, ev: CQEvent):
@@ -69,7 +70,7 @@ POOL_NAME_TIP = '请选择以下卡池\n> 切换卡池jp\n> 切换卡池tw\n> �
 @sv.on_prefix(('切换卡池', '选择卡池', '切換卡池', '選擇卡池'))
 async def set_pool(bot, ev: CQEvent):
     if not priv.check_priv(ev, priv.ADMIN):
-        await bot.finish(ev, '只有群管理才能切换卡池', at_sender=True)
+        await bot.finish(ev, '只有群主才能切换卡池', at_sender=True)
     name = util.normalize_str(ev.message.extract_plain_text())
     if not name:
         await bot.finish(ev, POOL_NAME_TIP, at_sender=True)
@@ -117,7 +118,7 @@ async def gacha_1(bot, ev: CQEvent):
     if sv.bot.config.USE_CQPRO:
         res = f'{chara.icon.cqcode} {res}'
 
-    await silence(ev, silence_time)
+    #await silence(ev, silence_time)
     await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}', at_sender=True)
 
 
@@ -152,7 +153,7 @@ async def gacha_10(bot, ev: CQEvent):
     if hiishi >= SUPER_LUCKY_LINE:
         await bot.send(ev, '恭喜海豹！おめでとうございます！')
     await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n', at_sender=True)
-    await silence(ev, silence_time)
+    #await silence(ev, silence_time)
 
 
 @sv.on_prefix(gacha_300_aliases, only_to_me=True)
@@ -187,7 +188,8 @@ async def gacha_300(bot, ev: CQEvent):
     msg = [
         f"\n素敵な仲間が増えますよ！ {res}",
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
-        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！"
+        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！",
+        f"发送'选择卡池',可以切换其他卡池"
     ]
 
     if up == 0 and s3 == 0:
@@ -216,12 +218,13 @@ async def gacha_300(bot, ev: CQEvent):
 
     await bot.send(ev, '\n'.join(msg), at_sender=True)
     silence_time = (100*up + 50*(up+s3) + 10*s2 + s1) * 1
-    await silence(ev, silence_time)
+    #await silence(ev, silence_time)
 
 
-@sv.on_prefix('氪金')
+@sv.on_prefix(['氪金', '充值','充钱','课金'])
 async def kakin(bot, ev: CQEvent):
-    if ev.user_id not in bot.config.SUPERUSERS:
+    #if ev.user_id not in bot.config.SUPERUSERS:
+    if ev['message_type'] == 'ADMIN':
         return
     count = 0
     for m in ev.message:
