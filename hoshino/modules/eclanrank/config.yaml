@@ -27,7 +27,7 @@ rules:
   only_one_locked: true
 
   # 对锁定的公会多长时间更新广播一次 单位小时
-  lock_clan_cron_time: 1
+  lock_clan_cron_time: 2
 
   # 档线多久更新一次 一般就比更新公会提前2分钟 单位分钟
   lock_clan_line_cron_time: 58
