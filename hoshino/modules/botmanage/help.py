@@ -4,7 +4,7 @@ from hoshino.typing import CQEvent
 sv = Service('_help_', manage_priv=priv.SUPERUSER, visible=False)
 
 TOP_MANUAL = '''
-http://pcrbot.kekeluo.xyz:9882/
+
 '''.strip()
 
 def gen_bundle_manual(bundle_name, service_list, gid):

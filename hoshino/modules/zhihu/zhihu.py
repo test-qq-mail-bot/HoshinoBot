@@ -3,9 +3,9 @@ from nonebot import on_command, CommandSession
 
 from hoshino.service import Service
 
-sv = Service('zhihu', enable_on_default=True, help_='知乎')
+sv = Service('zhihu',  help_='知乎')
 
-@on_command('zhihu', aliases=('知乎', '知乎日报'), only_to_me=False)
+@on_command('zhihu', aliases=('知乎', '知乎日报'), only_to_me=True)
 async def news(session: CommandSession):
     STORY_URL_FORMAT = 'https://daily.zhihu.com/story/{}'
     async with aiohttp.request('GET', 'https://news-at.zhihu.com/api/4/news/latest', headers={

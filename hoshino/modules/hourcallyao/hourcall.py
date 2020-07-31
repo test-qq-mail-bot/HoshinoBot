@@ -5,7 +5,7 @@ from hoshino import Service
 from hoshino.service import sucmd
 from hoshino.typing import CommandSession
 
-sv = Service('hourcallyao', enable_on_default=True, help_='提醒买药,地下城等')
+sv = Service('hourcallyao', help_='提醒买药,地下城等')
 tz = pytz.timezone('Asia/Shanghai')
 
 def get_hour_call():

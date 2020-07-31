@@ -11,7 +11,7 @@ try:
 except:
     import json
 
-sv = Service('pcr-competition', enable_on_default=True, bundle='pcr娱乐', help_='[@bot赛跑模拟]模拟来一局赛🐎')
+sv = Service('pcr-competition',  bundle='pcr娱乐', help_='[@bot赛跑模拟]模拟来一局赛🐎')
 
 _pool_config_file = os.path.expanduser('~/.hoshino/group_pool_config.json')
 _group_pool = {}

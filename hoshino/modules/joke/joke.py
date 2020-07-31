@@ -4,7 +4,7 @@ from nonebot import on_command, CommandSession
 from hoshino.service import Service
 
 
-sv = Service('joke', enable_on_default=True, help_='讲笑话')
+sv = Service('joke',  help_='讲笑话')
 
 @on_command('joke', aliases=('笑话', '讲个笑话', '来个笑话'), only_to_me=False)
 async def joke(session: CommandSession):

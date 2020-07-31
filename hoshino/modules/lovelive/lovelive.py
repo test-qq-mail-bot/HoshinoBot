@@ -3,7 +3,7 @@ from nonebot import on_command, CommandSession
 
 from hoshino.service import Service
 
-sv = Service('lovelive', enable_on_default=True, help_='土味情话')
+sv = Service('lovelive', help_='土味情话')
 
 @on_command('lovelive', aliases=('土味情话'), only_to_me=False)
 async def lovelive(session: CommandSession):

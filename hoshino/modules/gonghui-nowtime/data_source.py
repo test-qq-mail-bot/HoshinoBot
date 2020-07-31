@@ -19,4 +19,3 @@ def pic_to_b64(pic_path:str) -> str:
     with open(pic_path,'rb') as f:
         base64_str = base64.b64encode(f.read()).decode()
     return 'base64://' + base64_str
-
