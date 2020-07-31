@@ -9,6 +9,8 @@ from nonebot import Message, MessageSegment, message_preprocessor, on_command
 from nonebot.message import _check_calling_me_nickname
 
 import hoshino
+from hoshino.service import sucmd
+from hoshino.typing import CommandSession, CQHttpError
 from hoshino import R, Service, util
 
 '''
@@ -67,7 +69,7 @@ BANNED_WORD = (
     '没用东西', '傻B', '傻b', 'SB', 'sb', '煞笔', 'cnm', '爬', 'kkp', 
     'nmsl', 'D区', '口区', '我是你爹', 'nmbiss', '弱智', '给爷爬', 
     '给爷死', '日你大爷', '你妹的', '杂种', '你妈的', '杂种爬', '你妈' 
-    '屌你', '叼你', '操你妈', '爪巴','你妈炸了'
+    '屌你', '叼你', '操你妈', '爪巴','你妈炸了','垃圾' ,'妈的','草你妈','没用的东西'
 )
 @on_command('ban_word', aliases=BANNED_WORD, only_to_me=True)
 async def ban_word(session):
@@ -76,10 +78,65 @@ async def ban_word(session):
     msg_from = str(user_id)
     if ctx['message_type'] == 'group':
         msg_from += f'@[群:{ctx["group_id"]}]'
+        group_id=ctx["group_id"]
     elif ctx['message_type'] == 'discuss':
         msg_from += f'@[讨论组:{ctx["discuss_id"]}]'
+        group_id=ctx["discuss_id"]
+    if hoshino.priv.check_block_group(group_id):
+        return
+    
     hoshino.logger.critical(f'Self: {ctx["self_id"]}, Message {ctx["message_id"]} from {msg_from}: {ctx["message"]}')
     hoshino.priv.set_block_user(user_id, timedelta(hours=8))
     pic = R.img(f"chieri{random.randint(1, 4)}.jpg").cqcode
-    await session.send(f"检测到滥用行为，您的操作已被记录并加入黑名单。\n bot拒绝响应你在本群的消息\n不理你啦！バーカー\n{pic}", at_sender=True)
-    await util.silence(session.ctx, 4*60*60)
+    await session.send(f"不理你啦！バーカー\n{pic}", at_sender=True)
+    await util.silence(session.ctx, 8*60*60)
+
+@sucmd('bangroup', aliases=('gban', '群屏蔽'))
+async def bangroup(session: CommandSession):
+    msg = session.current_arg.split(' ')
+    try:
+        group_id=int(msg[0])
+    except Exception as e:
+        hoshino.logger.error(f'群屏蔽失败：{type(e)}')
+        try:
+            await session.send(f'群屏蔽失败：{type(e)}')
+        except Exception as e:
+            pass
+        return
+
+    hoshino.priv.set_block_group(group_id,timedelta(hours=8))
+
+    if len(msg)>1:
+        msg=' '.join(msg[1:])
+        for sid in hoshino.get_self_ids():
+            try:
+                await session.bot.send_group_msg(self_id=sid, group_id=group_id, message=msg)
+            except Exception as e:
+                hoshino.logger.error(f'发送群屏蔽消息失败：{type(e)}')
+
+    await session.send(f'屏蔽完成！')
+
+@sucmd('debangroup', aliases=('gdeban', '取消群屏蔽'))
+async def debangroup(session: CommandSession):
+    msg = session.current_arg.split(' ')
+    try:
+        group_id=int(msg[0])
+    except Exception as e:
+        hoshino.logger.error(f'取消群屏蔽失败：{type(e)}')
+        try:
+            await session.send(f'取消群屏蔽失败：{type(e)}')
+        except Exception as e:
+            pass
+        return
+
+    hoshino.priv.set_block_group(group_id,timedelta(seconds=1))
+
+    if len(msg)>1:
+        msg=' '.join(msg[1:])
+        for sid in hoshino.get_self_ids():
+            try:
+                await session.bot.send_group_msg(self_id=sid, group_id=group_id, message=msg)
+            except Exception as e:
+                hoshino.logger.error(f'发送取消群屏蔽消息失败：{type(e)}')
+
+    await session.send(f'取消屏蔽完成！')

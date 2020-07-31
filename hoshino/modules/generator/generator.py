@@ -52,14 +52,14 @@ def get_pic(qq):
     apiPath=f'http://q1.qlogo.cn/g?b=qq&nk={qq}&s=100'
     return requests.get(apiPath,timeout=20).content
 
-@sv.on_prefix(('营销号'))
+@sv.on_prefix(('营销号'), only_to_me=True)
 async def yxh(bot, ev: CQEvent):
     kw = ev.message.extract_plain_text().strip()
     arr = kw.split(' ')
     msg = f'    {arr[0]}{arr[1]}是怎么回事呢？{arr[0]}相信大家都很熟悉，但是{arr[0]}{arr[1]}是怎么回事呢，下面就让小编带大家一起了解吧。\n    {arr[0]}{arr[1]}，其实就是{arr[2]}，大家可能会很惊讶{arr[0]}怎么会{arr[1]}呢？但事实就是这样，小编也感到非常惊讶。\n    这就是关于{arr[0]}{arr[1]}的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！'
     await bot.send(ev, msg)
 
-@sv.on_prefix(('狗屁不通'))
+@sv.on_prefix(('狗屁不通'), only_to_me=True)
 async def gpbt(bot, ev: CQEvent):
     data = load_config(os.path.join(os.path.dirname(__file__),'data.json'))
     title = ev.message.extract_plain_text().strip()
@@ -78,13 +78,13 @@ async def gpbt(bot, ev: CQEvent):
         body = body.replace("x", title)
     await bot.send(ev, body)
 
-@sv.on_prefix(('记仇'))
+@sv.on_prefix(('记仇'), only_to_me=True)
 async def jc(bot, ev: CQEvent):
     kw = ev.message.extract_plain_text().strip()
     arr = kw.split(' ')
     image = Image.open(os.path.join(os.path.dirname(__file__),'jichou.jpg'))
     # 创建Font对象:
-    font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'simhei.ttf'), 80)
+    font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'/HoshinoBot/hoshino/modules/nowtime/msyh.ttf'), 75)
     
     time = datetime.datetime.now().strftime('%Y年%m月%d日')
     msg = f'{time}，{arr[0]}，{arr[1]}，这个仇我先记下了'
@@ -108,7 +108,7 @@ async def jc(bot, ev: CQEvent):
     
     await bot.send(ev, str(MessageSegment.image(pic2b64(image_back))))
 
-@sv.on_rex(('^我(有|有个|一个|有一个)*朋友(想问问|说|让我问问|想问|让我问|想知道|让我帮他问问|让我帮他问|让我帮忙问|让我帮忙问问|问)*(?P<kw>.{0,30}$)'))
+@sv.on_rex(('^我(有|有个|一个|有一个)*朋友(想问问|说|让我问问|想问|让我问|想知道|让我帮他问问|让我帮他问|让我帮忙问|让我帮忙问问|问)*(?P<kw>.{0,30}$)'), only_to_me=True)
 async def friend(bot, ev: CQEvent):
     if ev.user_id not in bot.config.SUPERUSERS:
         # 定义非管理员的冷却时间

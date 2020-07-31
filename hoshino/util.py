@@ -159,5 +159,9 @@ class DailyNumberLimiter:
     def increase(self, key, num=1):
         self.count[key] += num
 
+    def decrease(self, key, num=1):
+        self.count[key] -= num
+    #适应gacha宝石功能
+
     def reset(self, key):
         self.count[key] = 0

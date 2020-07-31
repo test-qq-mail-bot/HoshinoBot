@@ -65,45 +65,13 @@ def cb_cmd(name, parser:ArgParser) -> Callable:
 from .cmdv2 import *
 
 
-QUICK_START = f'''
-======================
-- Hoshino会战管理v2.0 -
-======================
-快速开始指南
-【必读事项】
-※会战系命令均以感叹号!开头，半全角均可
-※命令与参数之间必须以【空格】隔开
-※下面以使用场景-使用例给出常用指令的说明
-【群初次使用】
-!建会 N自警団（カォン） Sjp
-!建会 N哞哞自衛隊 Stw
-!建会 N自卫团 Scn
-【注册成员】
-!入会 祐树
-!入会 佐树 @123456789
-【上报伤害】
-!出刀 514w
-!收尾
-!补时刀 114w
-【预约Boss】
-!预约 5 M留言
-!取消预约 5
-【锁定Boss】
-!锁定
-!解锁
-【查询余刀&催刀】
-!查刀
-!催刀
-
-※前往 t.cn/A6wBzowv 查看完整命令一览表
-※如有问题请先阅读一览表底部的FAQ
-※使用前请务必【逐字】阅读开头的必读事项
-'''.rstrip()
+#QUICK_START = f'''
+#'''.rstrip()
 
 @on_command('!帮助', aliases=('！帮助', '!幫助', '！幫助', '!help', '！help'), only_to_me=False)
 async def cb_help(session:CommandSession):
-    await session.send(QUICK_START, at_sender=True)
-    msg = MessageSegment.share(url='https://github.com/Ice-Cirno/HoshinoBot/blob/master/hoshino/modules/pcrclanbattle/clanbattle/README.md',
+    #await session.send(QUICK_START, at_sender=True)
+    msg = MessageSegment.share(url='http://pcrbot.kekeluo.xyz:9882/clanbattle-help',
                                title='Hoshino会战管理v2',
                                content='命令一览表')
     await session.send(msg)

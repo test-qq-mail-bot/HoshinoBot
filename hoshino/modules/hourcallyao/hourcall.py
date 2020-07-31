@@ -2,6 +2,8 @@ import pytz
 from datetime import datetime
 import hoshino
 from hoshino import Service
+from hoshino.service import sucmd
+from hoshino.typing import CommandSession
 
 sv = Service('hourcallyao', enable_on_default=True, help_='提醒买药,地下城等')
 tz = pytz.timezone('Asia/Shanghai')
@@ -17,7 +19,15 @@ def get_hour_call():
 @sv.scheduled_job('cron', hour='*')
 async def hour_callyao():
     now = datetime.now(tz)
-    if 1 <= now.hour <= 5:
-        return  # 宵禁 免打扰
+    #if 2 <= now.hour <= 4:
+    if not now.hour % 6 == 0:
+        return
     msg = get_hour_call()[now.hour]
     await sv.broadcast(msg, 'hourcallyao', 0)
+
+@sucmd('manualhourcall', aliases=('mhc', '手动报时'))
+async def manual_hourcall(session: CommandSession):
+    msg = session.current_arg
+    if msg!="":
+        await sv.broadcast(msg, 'hourcallyao', 0)
+    await hour_callyao()

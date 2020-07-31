@@ -80,10 +80,10 @@ async def chat_queshi(bot, ctx):
         await bot.send(ctx, R.img('确实.jpg').cqcode)
 
 
-@sv.on_keyword(('会战'))
-async def chat_clanba(bot, ctx):
-    if random.random() < 0.02:
-        await bot.send(ctx, R.img('我的天啊你看看都几度了.jpg').cqcode)
+#@sv.on_keyword(('会战'))
+#async def chat_clanba(bot, ctx):
+#    if random.random() < 0.02:
+#        await bot.send(ctx, R.img('我的天啊你看看都几度了.jpg').cqcode)
 
 
 @sv.on_keyword(('内鬼'))
@@ -91,7 +91,7 @@ async def chat_neigui(bot, ctx):
     if random.random() < 0.05:
         await bot.send(ctx, R.img('内鬼.png').cqcode)
 
-nyb_player = f'''{R.img('newyearburst.jpg').cqcode}
+nyb_player = f'''{R.img('./图片/春黑.gif').cqcode}
 正在播放：New Year Burst
 ──●━━━━ 1:05/1:30
 ⇆ ㅤ◁ ㅤㅤ❚❚ ㅤㅤ▷ ㅤ↻
@@ -155,7 +155,7 @@ async def chigua(session):
 @sv.on_command('哈哈', aliases=('哈哈哈', '哈哈嗝','233','2333',), only_to_me=False)
 async def haha(session):
 	if random.random() < 0.10:
-		await session.send(R.img('./图片/哈哈哈.jpg').cqcode)
+		await session.send(R.img('./图片/能别笑我吗.jpg').cqcode)
 
 @sv.on_command('男妈妈', aliases=('不要男妈妈', ), only_to_me=False)
 async def nanmama(session):
@@ -177,3 +177,12 @@ async def jia1(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/+1.jpg').cqcode)
 
+@sv.on_command('刷图',  aliases=('查图', '刷装备', '装备',), only_to_me=False)
+async def shuatu(session):
+	await session.send(R.img('./图片/刷图.jpg').cqcode)
+
+
+@sv.on_command('test',  aliases=('test1',  ), only_to_me=False)
+async def test(session):
+	await session.send(R.img('./图片/春黑.gif').cqcode)
+	

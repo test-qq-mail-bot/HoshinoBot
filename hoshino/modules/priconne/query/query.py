@@ -3,12 +3,12 @@ from hoshino import util, R
 from hoshino.typing import CQEvent
 from . import sv
 
-p1 = R.img('priconne/quick/台服/6-15-tw-1.png').cqcode
-p2 = R.img('priconne/quick/台服/6-15-tw-2.png').cqcode
-p3 = R.img('priconne/quick/台服/6-15-tw-3.png').cqcode
-p4 = R.img('priconne/quick/日服/7-2前卫.png').cqcode
-p5 = R.img('priconne/quick/日服/7-2中卫.png').cqcode
-p6 = R.img('priconne/quick/日服/7-2后卫.png').cqcode
+p1 = R.img('priconne/quick/台服/1.png').cqcode
+p2 = R.img('priconne/quick/台服/2.png').cqcode
+p3 = R.img('priconne/quick/台服/3.png').cqcode
+p4 = R.img('priconne/quick/日服/1.jpg').cqcode
+p5 = R.img('priconne/quick/日服/2.jpg').cqcode
+p6 = R.img('priconne/quick/日服/3.jpg').cqcode
 p7 = R.img('priconne/quick/国服/1.png').cqcode
 p8 = R.img('priconne/quick/国服/2.png').cqcode
 
@@ -19,13 +19,13 @@ async def rank_sheet(bot, ev):
     is_tw = match.group(2) == '台'
     is_cn = match.group(2) == '国' or match.group(2) in ['b','陆']
     if not is_jp and not is_tw and not is_cn:
-        await bot.send(ev, '\n请问您要查询哪个服务器的rank表？\n*日rank表\n*台rank表\n*B服rank表\n※B服：当前仅开放至金装，r10前无需考虑卡rank，装备强化消耗较多mana，如非前排建议不强化', at_sender=True)
+        await bot.send(ev, '\n请问您要查询哪个服务器的rank表？\n*日rank表\n*台rank表\n*B服rank表\n※r10前无需考虑卡rank，装备强化消耗较多mana，如非前排建议不强化', at_sender=True)
         return
     msg = [
         '\n※表格仅供参考，升r有风险，强化需谨慎',
     ]
     if is_jp:
-        msg.append('※不定期搬运自图中群号\n※图中广告为原作者推广，与本bot无关\nrank表：')
+        msg.append('※不定期搬运来自NGA的pjttcn\n※如有好用的rank表,也可以私聊推荐给我\nrank表：')
         pos = match.group(3)
         if not pos or '前' in pos:
             msg.append(str(p4))
@@ -36,7 +36,7 @@ async def rank_sheet(bot, ev):
         await bot.send(ev, '\n'.join(msg), at_sender=True)
         #await util.silence(ev, 60)
     elif is_tw:
-        msg.append(f'※不定期搬运自Nonplume\n※NGA有原图及原文档\nR16-3 rank表：\n{p1}{p2}{p3}')
+        msg.append(f'※7月已更新\n※不定期搬运自Nonplume\n※NGA有原图及原文档\nrank表：\n{p1}{p2}{p3}')
         await bot.send(ev, '\n'.join(msg), at_sender=True)
         #await util.silence(ev, 60)
 

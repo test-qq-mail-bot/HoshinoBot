@@ -1,7 +1,7 @@
 import random
 
 import hoshino
-from hoshino import Service
+from hoshino import Service,R
 from hoshino.typing import CQEvent, CQHttpError
 
 sv = Service('random-repeater', help_='随机复读机')
@@ -32,6 +32,8 @@ async def random_repeater(bot, ev: CQEvent):
             if random.random() < p:    # 概率测试通过，复读并设flag
                 try:
                     group_stat[group_id] = (msg, True, 0)
+                    #await bot.send(ev, msg)
+                    await bot.send(ev,R.img("./图片/+1.jpg").cqcode)
                     await bot.send(ev, msg)
                 except CQHttpError as e:
                     hoshino.logger.error(f'复读失败: {type(e)}')
