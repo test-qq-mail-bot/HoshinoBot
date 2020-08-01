@@ -367,7 +367,7 @@ async def gacha_300(bot, ev: CQEvent):
 
 
 
-@sv.on_prefix('氪金')
+@sv.on_prefix(['氪金','课金','充值'])
 async def kakin(bot, ev: CQEvent):
     if not priv.check_priv(ev, priv.ADMIN):
         await bot.send(ev, '您的权限不足！请联系群管哦~')
