@@ -44,7 +44,7 @@ MODULES_ON = {
     'groupmaster',#生成器
     'flac',#搜索无损
     'hourcall',#时报
-     ##'kancolle',#演习/月常远征提醒
+    ##'kancolle',#演习/月常远征提醒
     ##'mikan',#蜜柑
     'pcrclanbattle',#公会战
     'priconne',#抽卡,rank表等
@@ -65,7 +65,7 @@ MODULES_ON = {
     'resignationfor',#yobot的数据生成离职报告
     'vortune',#v占卜
     'pcr-competition',#pcr简易赛跑
-    #'eclanrank', #会战排名查询
-    'deepchat',#从QQ群的聊天记录中根据关键词选出相似度最高的一句话,用来复读
+    ##'eclanrank', #会战排名查询
+    ##'deepchat',#从QQ群的聊天记录中根据关键词选出相似度最高的一句话,用来复读
     'clanrank',#会战排名查询2
 }
