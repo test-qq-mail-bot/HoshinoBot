@@ -65,6 +65,7 @@ MODULES_ON = {
     'resignationfor',#yobot的数据生成离职报告
     'vortune',#v占卜
     'pcr-competition',#pcr简易赛跑
-    'eclanrank', #会战排名查询
+    #'eclanrank', #会战排名查询
     'deepchat',#从QQ群的聊天记录中根据关键词选出相似度最高的一句话,用来复读
+    'clanrank',#会战排名查询2
 }
