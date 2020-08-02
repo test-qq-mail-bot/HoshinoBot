@@ -186,7 +186,7 @@ async def check_tenjo_num(bot, ev: CQEvent):
         await bot.finish(ev, TENJO_EXCEED_NOTICE, at_sender=True)
 
 
-@sv.on_rex(r'.*(宝石|石头|砖石).*')
+@sv.on_rex((r'.*(宝石|石头|砖石|钻石).*'), only_to_me=True)
 async def gacha_st(bot, ev: CQEvent):
 
     arg = str(ev.raw_message)
@@ -197,7 +197,7 @@ async def gacha_st(bot, ev: CQEvent):
         await bot.send(ev, f'现在有{6000 - num}宝石', at_sender=False)
 
 
-@sv.on_rex(r'.*抽签.*')
+@sv.on_rex((r'.*抽签.*'), only_to_me=True)
 async def gacha_d(bot, ev: CQEvent):
 
     arg = str(ev.raw_message)
@@ -220,7 +220,7 @@ async def gacha_d(bot, ev: CQEvent):
             await bot.send(ev, f'宝石被珠希偷走了 >_< 就↗剩↘1500宝石了')
 
 
-@sv.on_rex(r'^(?!.*(十|10|井)).*(来|抽).*(一|1).*(发|抽)|.*单.*(发|抽)')
+@sv.on_rex((r'^(?!.*(十|10|井)).*(来|抽).*(一|1).*(发|抽)|.*单.*(发|抽)'), only_to_me=True)
 async def gacha_1(bot, ev: CQEvent):
 
     arg = str(ev.raw_message)
@@ -247,7 +247,7 @@ async def gacha_1(bot, ev: CQEvent):
         await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n{SWITCH_POOL_TIP}', at_sender=True)
 
 
-@sv.on_rex(r'.*(十|10)(次|发|抽|连|下|連).*')
+@sv.on_rex((r'.*(十|10)(次|发|抽|连|下|連).*'), only_to_me=True)
 async def gacha_10(bot, ev: CQEvent):
 
     arg = str(ev.raw_message)
@@ -291,7 +291,7 @@ async def gacha_10(bot, ev: CQEvent):
 
 
 
-@sv.on_rex(r'.*(来|抽).*井.*')
+@sv.on_rex((r'.*(来|抽).*井.*'), only_to_me=True)
 async def gacha_300(bot, ev: CQEvent):
 
     arg = str(ev.raw_message)
@@ -367,7 +367,7 @@ async def gacha_300(bot, ev: CQEvent):
 
 
 
-@sv.on_prefix(['氪金','课金','充值'])
+@sv.on_prefix(['氪金','课金','充值','充钱'])
 async def kakin(bot, ev: CQEvent):
     if not priv.check_priv(ev, priv.ADMIN):
         await bot.send(ev, '您的权限不足！请联系群管哦~')
