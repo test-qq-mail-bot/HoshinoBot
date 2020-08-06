@@ -32,7 +32,6 @@ async def random_repeater(bot, ev: CQEvent):
             if random.random() < p:    # 概率测试通过，复读并设flag
                 try:
                     group_stat[group_id] = (msg, True, 0)
-                    await bot.send(ev,R.img("./图片/+1.jpg").cqcode)
                     await bot.send(ev, gfw.filter(msg))
                 except CQHttpError as e:
                     hoshino.logger.error(f'复读失败: {type(e)}')
