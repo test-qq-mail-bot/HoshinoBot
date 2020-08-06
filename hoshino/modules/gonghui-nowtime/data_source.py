@@ -1,7 +1,7 @@
 from PIL import Image,ImageFont,ImageDraw
 import os
 import base64
-def add_text(template_path,save_path,text:str,textsize:int,font='D:/Desktop/机器人/HoshinoBot - 副本/HoshinoBot/hoshino/config_example/msyh.ttf',textfill='black',position:tuple=(0,0)):
+def add_text(template_path,save_path,text:str,textsize:int,font='D:/Desktop/机器人/HoshinoBot - 副本/HoshinoBot/msyh.ttf',textfill='black',position:tuple=(0,0)):
     #textsize 文字大小
     #font 字体，默认微软雅黑
     #textfill 文字颜色，默认黑色
