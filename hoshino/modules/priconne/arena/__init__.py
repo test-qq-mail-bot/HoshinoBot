@@ -21,7 +21,7 @@ from . import arena
 lmt = FreqLimiter(5)
 
 aliases = ('怎么拆', '怎么解', '怎么打', '如何拆', '如何解', '如何打', '怎麼拆', '怎麼解', '怎麼打', 'jjc查询', 'jjc查詢')
-aliases_b = tuple('b' + a for a in aliases) + tuple('B' + a for a in aliases)+tuple('国' + a for a in aliases)
+aliases_b = tuple('b' + a for a in aliases) + tuple('B' + a for a in aliases)
 aliases_tw = tuple('台' + a for a in aliases)
 aliases_jp = tuple('日' + a for a in aliases)
 
@@ -67,7 +67,7 @@ async def _arena_query(bot, ev: CQEvent, region: int):
     if len(defen) > 5:
         await bot.finish(ev, '编队不能多于5名角色', at_sender=True)
     if len(defen) < 5:
-        await bot.finish(ev, '编队不能少于5名角色', at_sender=True)    
+        await bot.finish(ev, '由于数据库限制，少于5名角色的检索条件请移步pcrdfans.com进行查询', at_sender=True)
     if len(defen) != len(set(defen)):
         await bot.finish(ev, '编队中含重复角色', at_sender=True)
     if any(chara.is_npc(i) for i in defen):
@@ -82,21 +82,20 @@ async def _arena_query(bot, ev: CQEvent, region: int):
 
     # 处理查询结果
     if res is None:
-        await bot.finish(ev, '请再次查询\n如果多次查询失败，请先移步pcrdfans.com进行查询，并可联系维护组', at_sender=True)
+        await bot.finish(ev, '查询出错，请联系维护组调教\n请先移步pcrdfans.com进行查询', at_sender=True)
     if not len(res):
         await bot.finish(ev, '抱歉没有查询到解法\n※没有作业说明随便拆 发挥你的想象力～★\n作业上传请前往pcrdfans.com', at_sender=True)
     res = res[:min(6, len(res))]    # 限制显示数量，截断结果
 
     # 发送回复
-    if hoshino.config.USE_CQPRO:
-        sv.logger.info('Arena generating picture...')
-        atk_team = [ chara.gen_team_pic(entry['atk']) for entry in res ]
-        atk_team = concat_pic(atk_team)
-        atk_team = pic2b64(atk_team)
-        atk_team = str(MessageSegment.image(atk_team))
-        sv.logger.info('Arena picture ready!')
-    else:
-        atk_team = '\n'.join(map(lambda entry: ' '.join(map(lambda x: f"{x.name}{x.star if x.star else ''}{'专' if x.equip else ''}" , entry['atk'])) , res))
+    sv.logger.info('Arena generating picture...')
+    atk_team = [ chara.gen_team_pic(entry['atk']) for entry in res ]
+    atk_team = concat_pic(atk_team)
+    atk_team = pic2b64(atk_team)
+    atk_team = str(MessageSegment.image(atk_team))
+    sv.logger.info('Arena picture ready!')
+    # 纯文字版
+    # atk_team = '\n'.join(map(lambda entry: ' '.join(map(lambda x: f"{x.name}{x.star if x.star else ''}{'专' if x.equip else ''}" , entry['atk'])) , res))
 
     details = [ " ".join([
         f"赞{e['up']}+{e['my_up']}" if e['my_up'] else f"赞{e['up']}",
