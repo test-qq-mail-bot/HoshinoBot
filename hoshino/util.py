@@ -40,8 +40,7 @@ def load_config(inbuilt_file_var):
 
 async def delete_msg(ev: CQEvent):
     try:
-        if hoshino.config.USE_CQPRO:
-            await hoshino.get_bot().delete_msg(self_id=ev.self_id, message_id=ev.message_id)
+        await hoshino.get_bot().delete_msg(self_id=ev.self_id, message_id=ev.message_id)
     except ActionFailed as e:
         hoshino.logger.error(f'撤回失败 retcode={e.retcode}')
     except Exception as e:
@@ -159,9 +158,8 @@ class DailyNumberLimiter:
     def increase(self, key, num=1):
         self.count[key] += num
 
-    def decrease(self, key, num=1):
-        self.count[key] -= num
+    def reset(self, key):
+        self.count[key] = 0
     #适应gacha宝石功能
-
     def reset(self, key):
         self.count[key] = 0

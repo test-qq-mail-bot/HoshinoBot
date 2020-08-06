@@ -18,7 +18,7 @@ def get_hour_call():
 @sv.scheduled_job('cron', hour='*')
 async def hour_call():
     now = datetime.now(tz)
-    if 1 <= now.hour <= 5:
+    if 2 <= now.hour <= 4:
         return  # 宵禁 免打扰
     msg = get_hour_call()[now.hour]
     await sv.broadcast(msg, 'hourcall', 0)

@@ -17,7 +17,7 @@ try:
 except:
     import json
 
-ming = re.compile(r'.*(妈|可可罗|可可萝|[CQ:at,qq=1459936401]).*')
+ming = re.compile(r'.*(妈|可可罗|可可萝|).*')
 sv_help = '''
 [可可罗来发十连] 转蛋模拟
 [可可罗来发单抽] 转蛋模拟

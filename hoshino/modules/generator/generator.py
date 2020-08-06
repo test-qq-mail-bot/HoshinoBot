@@ -84,7 +84,7 @@ async def jc(bot, ev: CQEvent):
     arr = kw.split(' ')
     image = Image.open(os.path.join(os.path.dirname(__file__),'jichou.jpg'))
     # 创建Font对象:
-    font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'/HoshinoBot/hoshino/modules/nowtime/msyh.ttf'), 75)
+    font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'D:/Desktop/机器人/HoshinoBot - 副本/HoshinoBot/hoshino/config_example/msyh.ttf'), 75)
     
     time = datetime.datetime.now().strftime('%Y年%m月%d日')
     msg = f'{time}，{arr[0]}，{arr[1]}，这个仇我先记下了'

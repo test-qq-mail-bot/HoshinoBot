@@ -30,4 +30,4 @@ async def qks_rex(bot, ev):
     if s == 301 or s == 302:
         if 'granbluefantasy.jp' in h['Location']:
             await bot.send(ev, msg, at_sender=True)
-            #await util.silence(ev, 60)
+            await util.silence(ev, 60)
