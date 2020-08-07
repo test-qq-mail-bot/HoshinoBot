@@ -18,3 +18,4 @@ python-dateutil
 pyyaml
 sqlitedict
 peewee
+filetype==1.0.7

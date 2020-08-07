@@ -220,10 +220,7 @@ async def pcr_comp(bot, ev: CQEvent):
     res = MessageSegment.image(res)
     result_name = [f'{c.name}' for c in result]
     res_name = ' '.join(result_name)
-    if sv.bot.config.USE_CQPRO:
-        await bot.send(ev, f'比赛选手：\n{res}\n{res_name}\n※发送“选中+角色名称”开始比赛\n※可以选择外号', at_sender=True)
-    else:
-        await bot.send(ev, f'error:CQpro is required')
+    await bot.send(ev, f'比赛选手：\n{res}\n{res_name}\n※发送“选中+角色名称”开始比赛\n※可以选择外号', at_sender=True)
     save_player(result_name)
     g_uid = uid
 

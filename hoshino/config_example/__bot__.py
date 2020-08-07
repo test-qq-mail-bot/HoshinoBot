@@ -59,4 +59,5 @@ MODULES_ON = {
     'pcr-competition',#pcr简易赛跑
     ##'eclanrank', #会战排名查询
     'clanrank',#会战排名查询2
+    'shebot',#shebot
 }
