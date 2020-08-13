@@ -34,13 +34,12 @@ MODULES_ON = {
     'botmanage',#机器人管理
     'dice',#骰子
     'groupmaster',#生成器
-    'flac',#搜索无损
     'hourcall',#时报
     ##'kancolle',#演习/月常远征提醒
     ##'mikan',#蜜柑
     'pcrclanbattle',#公会战
     'priconne',#抽卡,rank表等
-    ##'setu',
+    ##'setu',    
     'translate',#翻译
     ##'twitter',#推特
     'gonghui-nowtime',#工会战催刀图
@@ -60,4 +59,5 @@ MODULES_ON = {
     ##'eclanrank', #会战排名查询
     'clanrank',#会战排名查询2
     'shebot',#shebot
+    'flac',#搜索无损    
 }
