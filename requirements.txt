@@ -17,5 +17,5 @@ ujson
 python-dateutil
 pyyaml
 sqlitedict
-peewee
+peewee 
 filetype==1.0.7
