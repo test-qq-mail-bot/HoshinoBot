@@ -63,6 +63,19 @@ def get_info(id):
     msg = f'\n公會: {query.guild}\n生日: {query.birthday}\n年齡: {query.age}\n身高: {query.height}\n體重: {query.weight}\n血型: {query.blood_type}\n種族: {query.race}\n喜好: {query.hobby}\nCV: {query.cv}\n簡介: {query.introduce}'
     return convert(msg, 'zh-hans')
 
+def get_cv(cv):
+    cv = convert(cv, 'zh-tw')
+    query = Info.select().where(Info.cv==cv)
+    if len(query) == 0:
+        msg = f"没有找到{cv}扮演的角色"
+    else:
+        msg = f"{cv} 的扮演角色有："
+        for i in query:
+            msg += "\n"
+            msg += i.name
+    return convert(msg, "zh-hans")
+
+
 def get_skill(id):
     loop = Info.get(Info.id==id)
     query = Skill.select().where(Skill.id==id)
