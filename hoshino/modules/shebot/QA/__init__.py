@@ -5,7 +5,7 @@ from aiocqhttp.event import Event
 from hoshino.priv import get_user_priv
 from hoshino.priv import *
 
-from hoshino import Service, gfw
+from hoshino import Service, util
 
 RECORDS = Record().get_records()
 
@@ -116,7 +116,7 @@ async def show_group_reply(bot, event: Event):
         page = 1
     records = {(m, n) : v for (m, n), v in RECORDS.items() if gid == n}
     reply, pages = show(records,page)
-    await bot.send(event,gfw.filter (reply.strip())+f'\n\n当前第{page}页，共{pages}页',at_sender=False)
+    await bot.send(event,util.filt_message (reply.strip())+f'\n\n当前第{page}页，共{pages}页',at_sender=False)
 
 @sv.on_prefix('查看所有问答')
 async def show_all_reply(bot, event: Event):

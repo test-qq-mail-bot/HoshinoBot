@@ -7,7 +7,7 @@ from aiocqhttp import event
 from hoshino.priv import *
 from nonebot.log import logger
 
-from hoshino import Service, gfw
+from hoshino import Service, util
 
 class Record:
     def __init__(self,qu=None,ans=None,rec_maker=None,group_id=None,is_open=None):
@@ -116,6 +116,6 @@ async def send_msg(event, msg, at_sender:bool=False):
     reply = choice(replys)
     final_replys = reply.split('+')
     for r in final_replys:
-        await bot.send(event, gfw.filter (r), at_sender=at_sender)
+        await bot.send(event, util.filt_message (r), at_sender=at_sender)
         await asyncio.sleep(0.5)
     
