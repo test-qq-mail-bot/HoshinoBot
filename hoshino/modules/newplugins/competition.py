@@ -224,7 +224,7 @@ async def pcr_comp(bot, ev: CQEvent):
     save_player(result_name)
     g_uid = uid
 
-@sv.on_prefix('选中','选','选择')
+@sv.on_prefix(('选中','选','选择'))
 async def _select_(bot, ev):
     global g_uid, g_result
     uid = ev.user_id

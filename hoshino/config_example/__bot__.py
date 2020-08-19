@@ -4,7 +4,7 @@
 """
 
 # hoshino监听的端口与ip
-PORT = 8899
+PORT = 9999
 HOST = '127.0.0.1'      # 本地部署使用此条配置（QQ客户端和bot端运行在同一台计算机）
 # HOST = '0.0.0.0'      # 开放公网访问使用此条配置（不安全）
 
@@ -37,7 +37,7 @@ MODULES_ON = {
     'hourcall',#时报
     ##'kancolle',#演习/月常远征提醒
     ##'mikan',#蜜柑
-    'pcrclanbattle',#公会战
+    ##'pcrclanbattle',#公会战
     'priconne',#抽卡,rank表等
     ##'setu',    
     'translate',#翻译
@@ -55,4 +55,5 @@ MODULES_ON = {
     'flac',#搜索无损    
     'calendar',#日程表
     'newplugins',#会战期间可以关闭的插件
+    'authMS',#授权
 }

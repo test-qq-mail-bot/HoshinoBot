@@ -16,6 +16,6 @@ aiohttp>=3.6
 ujson
 python-dateutil
 pyyaml
-sqlitedict
+sqlitedict~=1.6.0
 peewee 
 filetype==1.0.7
