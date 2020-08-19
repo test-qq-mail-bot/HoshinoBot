@@ -1,5 +1,4 @@
 # Config Files
-config.py
 hoshino/config/
 local_coolq_config/
 
@@ -9,9 +8,6 @@ database.json
 *.db
 *.sqlite
 res/
-imgs/
-image/
-images/
 
 # 非公开的组件
 # hoshino/modules/deepchat/
@@ -127,3 +123,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# gacha备份的原版本文件
+backup.json
+# gacha本地版本号文件
+local_ver.json

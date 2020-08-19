@@ -43,23 +43,16 @@ MODULES_ON = {
     'translate',#翻译
     ##'twitter',#推特
     'gonghui-nowtime',#工会战催刀图
-    'hourcallyao',#买药小助手
     'nowtime',#报时
     'Reloader',#重载hoshino程序
-    'tencent_ai',#腾讯ai聊天
-    'joke',#笑话
-    'lovelive',#土味情话
-    'zhihu',#知乎
     'generator',#营销号生成器等
     'morning-nowtime',#催起床图
     'bot_manager_web',#lssv的web管理
     'resignationfor',#yobot的数据生成离职报告
-    'vortune',#v占卜
-    'pcr-competition',#pcr简易赛跑
     ##'eclanrank', #会战排名查询
     'clanrank',#会战排名查询2
     'shebot',#shebot
     'flac',#搜索无损    
-    'pcravatarguess',#pcr猜头像
-    'pcrdescguess',#猜角色
+    'calendar',#日程表
+    'newplugins',#会战期间可以关闭的插件
 }
