@@ -152,7 +152,7 @@ async def auth_query_chat(session):
     await session.finish(msg)
 
 
-@on_command('充值', only_to_me=False)
+@on_command('续费', only_to_me=False)
 async def reg_group_chat(session):
     if not session.current_arg:
         # 检查参数
