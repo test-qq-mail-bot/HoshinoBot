@@ -50,7 +50,6 @@ MODULES_ON = {
     'bot_manager_web',#lssv的web管理
     'resignationfor',#yobot的数据生成离职报告
     'clanrank',#会战排名查询2
-    'shebot',#shebot
     'flac',#搜索无损    
     'calendar',#日程表
     'newplugins',#会战期间可以关闭的插件

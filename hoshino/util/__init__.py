@@ -160,12 +160,6 @@ class DailyNumberLimiter:
 
     def reset(self, key):
         self.count[key] = 0
-        
-        
-        
-    #适应gacha宝石功能
-    def reset(self, key):
-        self.count[key] = 0        
 
 
 from .textfilter.filter import DFAFilter

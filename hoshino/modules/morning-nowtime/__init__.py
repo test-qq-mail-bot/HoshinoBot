@@ -8,7 +8,7 @@ from .data_source import add_text,pic_to_b64
 config_path = os.path.dirname(__file__)+'/config.json'
 sv = Service('morning-nowtime', enable_on_default=True, help_='发送早上催人起床图片')
 
-@sv.on_keyword(keywords = ('起来图','早晨图','起床图'))
+@sv.on_fullmatch(('起来图','早晨图','起床图'))
 async def showtime(bot,ctx):
     now = datetime.now()
     hour = now.hour

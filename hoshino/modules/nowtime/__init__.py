@@ -8,7 +8,7 @@ from .data_source import add_text,pic_to_b64
 config_path = os.path.dirname(__file__)+'/config.json'
 sv = Service('nowtime', enable_on_default=True)
 
-@sv.on_keyword(keywords = ('报时','现在几点','几点钟啦','几点啦'))
+@sv.on_fullmatch(('报时','现在几点','几点钟啦','几点啦'))
 async def showtime(bot,ctx):
     now = datetime.now()
     hour = now.hour

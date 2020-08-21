@@ -8,7 +8,7 @@ from .data_source import add_text,pic_to_b64
 config_path = os.path.dirname(__file__)+'/config.json'
 sv = Service('gonhui-nowtime', enable_on_default=True, help_='发送公会战催刀图')
 
-@sv.on_keyword(keywords = ('公会战时间图','催刀图'))
+@sv.on_fullmatch(('公会战时间图','催刀图'))
 async def showtime(bot,ctx):
     now = datetime.now()
     hour = now.hour
