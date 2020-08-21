@@ -90,18 +90,20 @@ async def new_year_burst(bot, ev):
 
 
 
-@sv.on_command('爹', aliases=('爸', '爸爸',), only_to_me=True)
+@sv.on_command('爹', aliases=('爸','爸爸'), only_to_me=True)
 async def say_baba(session):
     await session.send('我是你妈!不是你爸!!!!', at_sender=True)
 
+@sv.on_keyword('早')
+async def zaoan(session):
+    await session.send('早上好，一束阳光照在身，祝你天天都开心，梦想可以变成真！加油呀', at_sender=True)
 
-
-@sv.on_command('晚安', only_to_me=True)
+@sv.on_keyword('晚')
 async def wanan(session):
     await session.send('晚安~祝你有个好梦~', at_sender=True)
 
 
-@sv.on_command('我爱你', aliases=('爱你', ), only_to_me=True)
+@sv.on_keyword('我爱你', only_to_me=True)
 async def woaini(session):
     await session.send('对不起,你是个好人', at_sender=True)
 
@@ -111,36 +113,36 @@ async def baobao(session):
     await session.send('抱抱~', at_sender=True)
 
 
-@sv.on_command('举高高', only_to_me=False)
+@sv.on_keyword('举高高', only_to_me=False)
 async def jugaogao(session):
     await session.send(R.img('举高高.jpg').cqcode)
 
-@sv.on_command('???', aliases=('??', '?',), only_to_me=False)
+@sv.on_keyword('?', only_to_me=False)
 async def wenhao(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/问号.jpg').cqcode)
 
-@sv.on_command('不懂', aliases=('不会', '不知道',), only_to_me=False)
+@sv.on_command('不懂', aliases=('不会', '不知道'), only_to_me=False)
 async def buzhidao(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/不懂.jpg').cqcode)
 
-@sv.on_command('不行', aliases=('no', '不要',), only_to_me=False)
+@sv.on_command('不行', aliases=('no', '不要'), only_to_me=False)
 async def buxing(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/不行.jpg').cqcode)
 
-@sv.on_command('吃瓜', aliases=('观望', '看看',), only_to_me=False)
+@sv.on_command('吃瓜', aliases=('观望', '看看'), only_to_me=False)
 async def chigua(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/吃瓜.jpg').cqcode)
 
-@sv.on_command('哈哈', aliases=('哈哈哈', '哈哈嗝','233','2333',), only_to_me=False)
+@sv.on_keyword('哈哈', only_to_me=False)
 async def haha(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/能别笑我吗.jpg').cqcode)
 
-@sv.on_command('男妈妈', aliases=('不要男妈妈', ), only_to_me=False)
+@sv.on_keyword('男妈妈')
 async def nanmama(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/男妈妈.jpg').cqcode)
@@ -150,12 +152,12 @@ async def sao(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/你好骚啊.jpg').cqcode)
 
-@sv.on_command('是的', aliases=('yes', '是', '没错', ), only_to_me=False)
+@sv.on_command('是的', aliases=('yes', '是', '没错' ), only_to_me=False)
 async def shide(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/是的.jpg').cqcode)
 
-@sv.on_command('+1',  aliases=('复读', '复读机', ), only_to_me=False)
+@sv.on_command('+1',  aliases=('复读', '复读机' ), only_to_me=False)
 async def jia1(session):
 	if random.random() < 0.10:
 		await session.send(R.img('./图片/+1.jpg').cqcode)
@@ -174,9 +176,9 @@ async def chat_nihaole(bot, ev):
     if random.random() >= 0.3:
         await bot.send(ev, '不许好，憋回去！')
     else:
-        await bot.send(ev, '不,你不好', at_sender=True)
+        await bot.send(ev, '不,你不能好', at_sender=True)
 
-@sv.on_keyword(('我有个朋友说他好了', '我朋友说他好了','朋友说他好了', ))
+@sv.on_keyword(('我有个朋友说他好了', '我朋友说他好了','朋友说他好了' ))
 async def ddhaole(bot, ev):
     if random.random() >= 0.3:
         await bot.send(ev, '那个朋友是不是你弟弟？')
