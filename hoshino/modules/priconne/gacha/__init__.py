@@ -24,7 +24,7 @@ sv_help = '''
 '''.strip()
 sv = Service('gacha', help_=sv_help, bundle='pcr娱乐')
 jewel_limit = DailyNumberLimiter(15000)
-tenjo_limit = DailyNumberLimiter(5)
+tenjo_limit = DailyNumberLimiter(1)
 
 JEWEL_EXCEED_NOTICE = f'您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
 TENJO_EXCEED_NOTICE = f'您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
@@ -46,8 +46,8 @@ def dump_pool_config():
 
 
 gacha_10_aliases = ('抽十连', '十连', '十连！', '十连抽', '来个十连', '来发十连', '来次十连', '抽个十连', '抽发十连', '抽次十连', '十连扭蛋', '扭蛋十连',
-                    '10连', '10连！', '10连抽', '来个10连')
-gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋')
+                    '10连', '10连！', '10连抽', '来个10连','来十连')
+gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋','单发','来单发')
 gacha_300_aliases = ('抽一井', '来一井', '来发井', '抽发井', '天井扭蛋', '扭蛋天井')
 
 @sv.on_fullmatch(('卡池资讯', '查看卡池', '看看卡池', '康康卡池','看看up', '看看UP'))
@@ -175,7 +175,7 @@ async def gacha_1(bot, ev: CQEvent):
     res = f'{chara.icon.cqcode} {res}'
 
     #await silence(ev, silence_time)
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n想切换卡池的话,请发 选择卡池', at_sender=True)
 
 
 @sv.on_prefix(gacha_10_aliases, only_to_me=True)
@@ -204,7 +204,7 @@ async def gacha_10(bot, ev: CQEvent):
 
     if hiishi >= SUPER_LUCKY_LINE:
         await bot.send(ev, '恭喜海豹！おめでとうございます！')
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n想切换卡池的话,请发 选择卡池', at_sender=True)
     #await silence(ev, silence_time)
 
 
@@ -240,7 +240,9 @@ async def gacha_300(bot, ev: CQEvent):
     msg = [
         f"\n素敵な仲間が増えますよ！ {res}",
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
-        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！"
+        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！",
+        f"如果想再抽,请叫管理员以上的权限发(氪金+@您本人)",
+        f"想切换卡池的话,请发 选择卡池"        
     ]
 
     if up == 0 and s3 == 0:
@@ -272,10 +274,11 @@ async def gacha_300(bot, ev: CQEvent):
     #await silence(ev, silence_time)
 
 
-@sv.on_prefix('氪金')
+@sv.on_prefix(['氪金','课金','充值','充钱'])
 async def kakin(bot, ev: CQEvent):
-    #if ev.user_id not in bot.config.SUPERUSERS:
-    #    return
+    if not priv.check_priv(ev, priv.ADMIN):
+        await bot.send(ev, '您的权限不足！请联系群管哦~')
+        return
     count = 0
     for m in ev.message:
         if m.type == 'at' and m.data['qq'] != 'all':
