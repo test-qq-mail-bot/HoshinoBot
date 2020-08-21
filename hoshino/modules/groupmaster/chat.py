@@ -152,7 +152,7 @@ async def sao(bot, ev):
 	if random.random() < 0.10:
 		await bot.send(ev, R.img('./图片/你好骚啊.jpg').cqcode)
 
-@sv.on_keyword(('是的', 'yes', '是', '没错' ))
+@sv.on_keyword(('是的', 'yes', '没错' ))
 async def shide(bot, ev):
 	if random.random() < 0.10:
 		await bot.send(ev, R.img('./图片/是的.jpg').cqcode)
