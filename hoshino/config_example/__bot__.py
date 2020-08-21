@@ -49,7 +49,6 @@ MODULES_ON = {
     'morning-nowtime',#催起床图
     'bot_manager_web',#lssv的web管理
     'resignationfor',#yobot的数据生成离职报告
-    ##'eclanrank', #会战排名查询
     'clanrank',#会战排名查询2
     'shebot',#shebot
     'flac',#搜索无损    
