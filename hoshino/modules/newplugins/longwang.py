@@ -14,10 +14,10 @@ async def longwang(session):
     if dragon_king==session.ctx['self_id']:
         longwangme=R.img('图片/龙王/longwangme.jpg').cqcode
         session.finish(f'{longwangme}')
-    n = random.randint(0, 6)
+    n = random.randint(0, 7)
     if 0==n:
         img="龙王出来喷水"
-    elif 6==n:
+    elif 7==n:
         img="龙王出来挨透"
     else:
         img = R.img('图片/龙王/longwang{}.jpg'.format(n)).cqcode
