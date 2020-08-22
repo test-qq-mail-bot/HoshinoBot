@@ -1,7 +1,7 @@
 from hoshino import Service
 from hoshino.typing import CQEvent
 from hoshino.modules.priconne import chara
-from . import _chara_data
+from . import pcrdescguess_data
 
 import hoshino
 import sqlite3, os, random, asyncio
@@ -136,10 +136,10 @@ async def description_guess(bot, ev: CQEvent):
         desc_suffix = ['', '', '', '', 'cm', 'kg', '', '', '', '']
         index_list = list(range(1,10))
         random.shuffle(index_list)
-        chara_id_list = list(_chara_data.CHARA_DATA.keys())
+        chara_id_list = list(pcrdescguess_data.CHARA_DATA.keys())
         random.shuffle(chara_id_list)
         chara_id = chara_id_list[0]
-        chara_desc_list = _chara_data.CHARA_DATA[chara_id]
+        chara_desc_list = pcrdescguess_data.CHARA_DATA[chara_id]
         winner_judger.set_correct_chara_id(chara_id)
         for i in range(TURN_NUMBER):
             desc_index = index_list[i]
