@@ -2,7 +2,7 @@ import os.path
 import peewee as pw
 
 db = pw.SqliteDatabase(
-    os.path.join(os.path.dirname(__file__), 'ys.db')
+    os.path.join(os.path.dirname(__file__), 'Vortune-data.db')
 )
 
 class Vortune(pw.Model):

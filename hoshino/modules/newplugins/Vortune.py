@@ -12,8 +12,8 @@ try:
 except:
     import json as ujson
 
-absPath = './hoshino/modules/newplugins'
-logger = log.new_logger('Vortune_Hoshino', hoshino.config.DEBUG)
+absPath = './hoshino/modules/newplugins/Vortune-data'
+logger = log.new_logger('Vortune', hoshino.config.DEBUG)
 tz = pytz.timezone('Asia/Shanghai')
 
 FAILURE = 'failure'
@@ -74,13 +74,13 @@ def cqimage(outpath):
 
 async def drawing(model, userid):
     fontPath = {
-        'title': absPath + '/vdata/font/Mamelon.otf',
-        'text': absPath + '/vdata/font/sakura.ttf'
+        'title': absPath + '/font/Mamelon.otf',
+        'text': absPath + '/font/sakura.ttf'
     }
     imgPath = await randomBasemap()
-    imgsavePath = absPath + '/vdata/out/userid_' + str(userid) + '.png'
+    imgsavePath = absPath + '/out/userid_' + str(userid) + '.png'
     if model != DEFAULT:
-        imgPath = absPath + '/vdata/img/' + model
+        imgPath = absPath + '/img/' + model
     img = Image.open(imgPath)
     # Draw title
     draw = ImageDraw.Draw(img)
@@ -117,19 +117,19 @@ async def drawing(model, userid):
 
 
 async def randomBasemap():
-    p = absPath + '/vdata/img'
+    p = absPath + '/img'
     ranpath = random.choice(os.listdir(p))
     return p + '/' + ranpath
 
 
 async def copywriting():
-    p = absPath + '/vdata/fortune/copywriting.json'
+    p = absPath + '/fortune/copywriting.json'
     content = await readJson(p)
     return random.choice(content['copywriting'])
 
 
 async def getTitle(structure):
-    p = absPath + '/vdata/fortune/goodLuck.json'
+    p = absPath + '/fortune/goodLuck.json'
     content = await readJson(p)
     for i in content['types_of']:
         if i['good-luck'] == structure['good-luck']:

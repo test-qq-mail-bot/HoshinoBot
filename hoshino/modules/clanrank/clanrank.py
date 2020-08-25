@@ -16,14 +16,14 @@ sv_query = Service("clanrank-query",enable_on_default=True,visible = True,help_=
 sv_push = Service("clanrank-push",enable_on_default=True,visible=True,help_='''
 以下仅限国服B站，渠道服/日台服均不可用
 如果不知道会长ID可以先通过通用查询来查询会长的ID
-【绑定公会ID】后跟会长ID来绑定公会, 公会战期间每日5:30会自动推送前一日排名
+【绑定公会】后跟会长ID来绑定公会, 公会战期间每日5:30会自动推送前一日排名
 【公会排名】查询本公会的排名
 '''.strip())
 
 url_first = "https://service-kjcbcnmw-1254119946.gz.apigw.tencentcs.com/"
 headers = {"Custom-Source":"GitHub@var-mixer","Content-Type": "application/json","Referer": "https://kengxxiao.github.io/Kyouka/"}
 
-_time_limit = 300
+_time_limit = 120
 _lmt = FreqLimiter(_time_limit)
 
 def loadConfig():
@@ -48,34 +48,35 @@ def saveConfig(config):
     with open("./hoshino/modules/clanrank/clanrank.json","w",encoding='utf-8') as dump_f:
         json.dump(config,dump_f,indent=4,ensure_ascii=False)
  
-def get_rank(info,info_type):
+def get_rank(info, info_type, time=0):
     """
     母函数, 网络查询, 返回原始json信息
     可以查询的信息包括会长名字、公会名、名次、分数、榜单前十、会长ID
     仅限前2W名和分数线公会\n
+    time请保证为时间戳形式
     """
     url = url_first + info_type
     url += '/'
     
     if info_type == "name":
         url += '-1'
-        content = json.dumps({"history":"0","clanName": info})
+        content = json.dumps({"history":int(time),"clanName": info})
     elif info_type == "leader":
         url += '-1'
-        content = json.dumps({"history":"0","leaderName": info})
+        content = json.dumps({"history":int(time),"leaderName": info})
     elif info_type == "score":
         # 无需额外请求头
         url += info
-        content = json.dumps({"history":"0"})
+        content = json.dumps({"history":int(time)})
     elif info_type == "rank":
         url += info
-        content = json.dumps({"history":"0"})
+        content = json.dumps({"history":int(time)})
     elif info_type == "fav":
         info = [info] # 转化为表
-        content = json.dumps({"ids": info, "history": "0"})
+        content = json.dumps({"ids": info, "history": int(time)})
     elif info_type == "line":
         # info内容此时无效
-        content = json.dumps({"ids": info, "history": "0"})
+        content = json.dumps({"ids": info, "history": int(time)})
     else:
         # 这都能填错?爪巴!
         return -1
@@ -85,6 +86,7 @@ def get_rank(info,info_type):
         # timeout
         return 408
     r_dec = json.loads(r.text)
+    hoshino.logger.info(f'接受到查询结果{r.text}')
     return r_dec
 
 def process(dec, infoList:list):
@@ -102,6 +104,7 @@ def process(dec, infoList:list):
     'leader_viewer_id':会长数字ID \n
     'full'：所有匹配到的查询结果
     """
+    infoList = infoList.copy() # 避免影响后续查询, 感谢sjj118, 参见#4
     # 异常处理
     if dec['code'] != 0:
         # Bad request
@@ -170,7 +173,7 @@ def set_clanname(group_id,leader_id):
     saveConfig(clanrank_config)
     return 0
 
-@sv_push.on_fullmatch(('公会排名','工会排名'), only_to_me=True)
+@sv_push.on_fullmatch(('公会排名','工会排名'))
 async def clanrankQuery(bot, ev:CQEvent):
     """
     查询本公会排名, 需要预先绑定公会。
@@ -191,17 +194,17 @@ async def clanrankQuery(bot, ev:CQEvent):
         await bot.send(ev, msg)
         code = set_clanname(int(group_id),config[str(group_id)]["leaderId"])
         if code != 0:
-            msg = f'发生错误{code}, 可能的原因：公会更换了会长/工会排名不在前2W名。\n如果非上述原因, 请联系维护并提供此信息。\n'
+            msg = f'发生错误{code}, 可能的原因：公会更换了会长/工会排名不在前2W名/传入的时间戳不正确。\n如果非上述原因, 请联系维护并提供此信息。\n'
             await bot.send(ev, msg)
             return
         else:
             config = loadConfig() # 信息已经被缓存, 重新读取
     last_query_info = config[str(group_id)]["lastQuery"]
-    msg = process(last_query_info,self_lan_query_list)
+    msg = process(last_query_info,self_clan_query_list)
     await bot.send(ev, msg)
     
 
-@sv_push.on_prefix(('绑定公会','绑定工会'), only_to_me=True)
+@sv_push.on_prefix(['绑定公会','绑定工会'])
 async def set_clan(bot,ev:CQEvent):
     """
     为一个公会绑定信息, 需要会长ID
@@ -226,7 +229,7 @@ async def set_clan(bot,ev:CQEvent):
     # 发送绑定过程中的查询结果
     clanrank_config = loadConfig()
     last_query_info = clanrank_config[str(group_id)]["lastQuery"]
-    msg = process(last_query_info,self_lan_query_list)
+    msg = process(last_query_info,self_clan_query_list)
     await bot.send(ev, msg, at_sender=False)  
 
 @sv_push.scheduled_job('cron',hour='5',minute='30')
@@ -261,7 +264,7 @@ async def clanrank_push_cn():
 # -----------------------------------
 # 此部分以下为旧版直接查询的函数
 
-@sv_query.on_prefix(('查询公会', '查询工会'), only_to_me=True)
+@sv_query.on_prefix(['查询公会', '查询工会'])
 async def rank_query_by_name(bot, ev: CQEvent):
     """
     通过公会名查询排名
@@ -281,7 +284,7 @@ async def rank_query_by_name(bot, ev: CQEvent):
     await bot.send(ev, msg)
 
 
-@sv_query.on_prefix(('查询会长'), only_to_me=True)
+@sv_query.on_prefix('查询会长')
 async def rank_query_by_leader(bot, ev: CQEvent):
     """
     通过会长名字查询排名
@@ -301,7 +304,7 @@ async def rank_query_by_leader(bot, ev: CQEvent):
     await bot.send(ev, msg)
 
 
-@sv_query.on_prefix(('查询排名','公会排名','工会排名'), only_to_me=True)
+@sv_query.on_prefix('查询排名')
 async def rank_query_by_rank(bot, ev: CQEvent):
     """
     查看指定名次的公会信息
@@ -323,7 +326,7 @@ async def rank_query_by_rank(bot, ev: CQEvent):
         _lmt.start_cd(uid)
     await bot.send(ev, msg)
 
-@sv_query.on_fullmatch(('分数线'), only_to_me=True)
+@sv_query.on_fullmatch('分数线')
 async def damage_line(bot, ev: CQEvent):
     """
     通过line接口来查询分数线，共14条信息
