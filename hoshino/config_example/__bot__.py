@@ -54,4 +54,5 @@ MODULES_ON = {
     'calendar',#日程表
     'newplugins',#会战期间可以关闭的插件
     'authMS',#授权
+    'image-generate',#生成表情包
 }

@@ -4,7 +4,7 @@ from . import get
 
 sv = Service('image-generate')
 
-@sv.on_prefix(('选图','imgsw','IMGSW'))
+@sv.on_prefix(('选图','imgsw','IMGSW'), only_to_me=True)
 async def switch_img(bot, ev):
     uid = ev.user_id
     msg = str(ev.message).strip()
@@ -13,7 +13,7 @@ async def switch_img(bot, ev):
             img = R.img(f'image-generate/image_data/{mark}/{mark}.jpg').cqcode
             await bot.send(ev,f'表情已更换为{msg}\n{img}', at_sender=True)
 
-@sv.on_suffix(('.jpg','.JPG'))
+@sv.on_suffix(('.jpg','.JPG','。jpg'), only_to_me=True)
 @sv.on_prefix(('生成表情包','imgen','IMGEN'))
 async def generate_img(bot, ev):
     msg = ev.message.extract_plain_text()
