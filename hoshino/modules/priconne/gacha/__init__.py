@@ -24,10 +24,10 @@ sv_help = '''
 '''.strip()
 sv = Service('gacha', help_=sv_help, bundle='pcr娱乐')
 jewel_limit = DailyNumberLimiter(15000)
-tenjo_limit = DailyNumberLimiter(1)
+tenjo_limit = DailyNumberLimiter(2)
 
-JEWEL_EXCEED_NOTICE = f'您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
-TENJO_EXCEED_NOTICE = f'您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
+JEWEL_EXCEED_NOTICE = f'别抽力别抽力，您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
+TENJO_EXCEED_NOTICE = f'真当您是母猪了？您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
 POOL = ('MIX', 'JP', 'TW', 'BL')
 DEFAULT_POOL = POOL[0]
 
@@ -109,6 +109,8 @@ async def set_pool(bot, ev: CQEvent):
         name = '泳裝-真步'
     elif name in ('泳装流夏', '泳装大姐头', '水流夏', '水大姐头'):
         name = '泳裝-流夏'
+    elif name in ('泳装纯', '泳装黑骑','水纯'):
+        name = '泳裝-纯'
     elif name in ('万圣限定'):
         await bot.finish(ev,'请选择以下卡池\n> 选择卡池 万圣忍\n> 选择卡池 万圣美咲\n> 选择卡池 万圣小仓唯')
     elif name in ('万圣忍', '瓜忍'):
@@ -242,7 +244,7 @@ async def gacha_300(bot, ev: CQEvent):
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
         f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！",
         f"如果想再抽,请叫管理员以上的权限发(氪金+@您本人)",
-        f"想切换卡池的话,请发 选择卡池"        
+        f"想切换卡池的话,请发 选择卡池"         
     ]
 
     if up == 0 and s3 == 0:
