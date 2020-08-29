@@ -13,7 +13,7 @@ async def switch_img(bot, ev):
             img = R.img(f'image-generate/image_data/{mark}/{mark}.jpg').cqcode
             await bot.send(ev,f'表情已更换为{msg}\n{img}', at_sender=True)
 
-@sv.on_suffix(('.jpg','.JPG','。jpg'), only_to_me=True)
+@sv.on_suffix(('.jpg','.JPG','。jpg'))
 @sv.on_prefix(('生成表情包','imgen','IMGEN'))
 async def generate_img(bot, ev):
     msg = ev.message.extract_plain_text()
