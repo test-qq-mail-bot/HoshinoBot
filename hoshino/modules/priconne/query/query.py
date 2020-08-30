@@ -36,7 +36,7 @@ async def rank_sheet(bot, ev):
         await bot.send(ev, '\n'.join(msg), at_sender=True)
         #await util.silence(ev, 60)
     elif is_tw:
-        msg.append(f'※7月已更新\n※不定期搬运自Nonplume\n※NGA有原图及原文档\nrank表：\n{p1}{p2}{p3}')
+        msg.append(f'※不定期搬运自Nonplume\n※NGA有原图及原文档\nrank表：\n{p1}{p2}{p3}')
         await bot.send(ev, '\n'.join(msg), at_sender=True)
         #await util.silence(ev, 60)
 
@@ -56,7 +56,7 @@ async def say_arina_database(bot, ev):
     await bot.send(ev, '公主连接Re:Dive 竞技场编成数据库\n日文：https://nomae.net/arenadb \n中文：https://pcrdfans.com/battle')
 
 
-OTHER_KEYWORDS = '【日rank】【台rank】【b服rank】【jjc作业网】【黄骑充电表】【一个顶俩】'
+OTHER_KEYWORDS = '【日rank】【台rank】【b服rank】【jjc作业网】【黄骑充电表】【一个顶俩】【角色站位表】【日程表】'
 PCR_SITES = f'''
 【繁中wiki/兰德索尔图书馆】pcredivewiki.tw
 【日文wiki/GameWith】gamewith.jp/pricone-re
@@ -76,13 +76,16 @@ PCR_SITES = f'''
 
 BCR_SITES = f'''
 【PJJC防守阵容搭配思路】https://bbs.nga.cn/read.php?tid=22372410
-【公会战排名网页端查询】https://kengxxiao.github.io/Kyouka/
-【2020/6月Rank9-3推荐表】https://bbs.nga.cn/read.php?tid=22247310
+【公会战排名网页端查询1】https://kengxxiao.github.io/Kyouka/
+【公会战排名网页端查询2】https://www.bigfun.cn/tools/pcrteam/chart
 【赫斯海德计轴器演示】https://www.bilibili.com/video/BV16C4y1a7oh?p=1
 【角色动作帧数表】https://bbs.nga.cn/read.php?tid=21952354&_fp=2
 【黄骑充电详解】https://bbs.nga.cn/read.php?tid=21913703&_fp=2
 【仓鼠玩家pjjc登顶教程】https://bbs.nga.cn/read.php?tid=21850496&_fp=2
-
+【国服活动,卡池千里眼等】https://nga.178.com/read.php?tid=21478254
+【公主连结公会战工具】https://www.bigfun.cn/tools/pcrteam
+【论坛/NGA社区】https://bbs.nga.cn/thread.php?fid=-10308342
+【Bilibili站点WIKI】https://wiki.biligame.com/pcr/%E9%A6%96%E9%A1%B5
 ===其他查询关键词===
 {OTHER_KEYWORDS}
 ※日台服速查请输入【pcr速查】
@@ -111,12 +114,6 @@ async def yukari_sheet(bot, ev):
     await bot.send(ev, YUKARI_SHEET, at_sender=True)
     #await util.silence(ev, 60)
 
-@sv.on_fullmatch(('角色位置','角色站位','站位'))
-async def stand_position(bot,ev):
-	await bot.send(ev,R.img('图片/角色站位表/1.png').cqcode)
-	await bot.send(ev,R.img('图片/角色站位表/2.png').cqcode)
-	await bot.send(ev,R.img('图片/角色站位表/3.png').cqcode, at_sender=True)
-
 DRAGON_TOOL = f'''
 拼音对照表：{R.img('priconne/KyaruMiniGame/注音文字.jpg').cqcode}{R.img('priconne/KyaruMiniGame/接龙.jpg').cqcode}
 龍的探索者們小遊戲單字表 https://hanshino.nctu.me/online/KyaruMiniGame
@@ -126,3 +123,13 @@ DRAGON_TOOL = f'''
 async def dragon(bot, ev):
     await bot.send(ev, DRAGON_TOOL, at_sender=True)
     #await util.silence(ev, 60)
+
+
+@sv.on_fullmatch(('角色位置表','角色站位表','站位表'))
+async def stand_position(bot,ev):
+	await bot.send(ev,R.img('图片/角色站位表/1.png').cqcode)
+	await bot.send(ev,R.img('图片/角色站位表/2.png').cqcode)
+	await bot.send(ev,R.img('图片/角色站位表/3.png').cqcode)
+	await bot.send(ev,R.img('图片/角色站位表/4.png').cqcode, at_sender=True)
+
+    
