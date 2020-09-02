@@ -6,9 +6,9 @@ from . import sv
 p1 = R.img('priconne/quick/台服/1.png').cqcode
 p2 = R.img('priconne/quick/台服/2.png').cqcode
 p3 = R.img('priconne/quick/台服/3.png').cqcode
-p4 = R.img('priconne/quick/日服/1.jpg').cqcode
-p5 = R.img('priconne/quick/日服/2.jpg').cqcode
-p6 = R.img('priconne/quick/日服/3.jpg').cqcode
+p4 = R.img('priconne/quick/日服/1.png').cqcode
+p5 = R.img('priconne/quick/日服/2.png').cqcode
+p6 = R.img('priconne/quick/日服/3.png').cqcode
 p7 = R.img('priconne/quick/国服/1.png').cqcode
 p8 = R.img('priconne/quick/国服/2.png').cqcode
 
