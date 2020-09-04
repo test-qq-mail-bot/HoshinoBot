@@ -48,11 +48,12 @@ MODULES_ON = {
     'generator',#营销号生成器等
     'morning-nowtime',#催起床图
     'bot_manager_web',#lssv的web管理
-    'resignationfor',#yobot的数据生成离职报告
+    'clanbattle_report',#离职报告
     'clanrank',#会战排名查询2
     'flac',#搜索无损    
     'calendar',#日程表
     'newplugins',#会战期间可以关闭的插件
     'authMS',#授权
     'image-generate',#生成表情包
+    'eqa',#你问我答
 }
