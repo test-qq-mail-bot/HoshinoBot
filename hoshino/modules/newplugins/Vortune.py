@@ -19,7 +19,7 @@ tz = pytz.timezone('Asia/Shanghai')
 FAILURE = 'failure'
 DEFAULT = 'default'
 
-sv = Service('vortune_hoshino', help_='''
+sv = Service('vortune', help_='''
 今日人品
 今日运势
 抽签
