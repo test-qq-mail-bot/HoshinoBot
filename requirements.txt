@@ -18,5 +18,5 @@ pyyaml
 sqlitedict~=1.6.0
 filetype==1.0.7
 selenium
-peewee~=0.7.2
+peewee
 ujson
