@@ -13,9 +13,10 @@ beautifulsoup4>=4.9.0
 pygtrie>=2.0
 tinydb>=4.0
 aiohttp>=3.6
-ujson
 python-dateutil
 pyyaml
 sqlitedict~=1.6.0
-peewee~=7.2.0
 filetype==1.0.7
+selenium
+peewee~=0.7.2
+ujson

@@ -56,4 +56,5 @@ MODULES_ON = {
     'authMS',#授权
     'image-generate',#生成表情包
     'eqa',#你问我答
+    'hourcall-yao',#买药小助手
 }

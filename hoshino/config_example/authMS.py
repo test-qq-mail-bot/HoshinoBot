@@ -4,7 +4,8 @@ class auth_config(object):
 
     # 授权系统自动检测总开关, 默认为关闭状态，此时不会自动检测/自动退群/停止响应无授权群聊
     # 设置此项目的是初次使用authMS时系统时的过渡选项, 正式使用应当配置为True
-    ENABLE_AUTH = True
+    ENABLE_AUTH = False
+
 # ------------------网页管理---------------------
     # 是否启用WEB
     ENABLE_WEB = True
@@ -15,10 +16,10 @@ class auth_config(object):
 # -------------------数据互通---------------------
     # 互通数据库的目录,例如group.sqlite位置/root/database/group.sqlite
     # 此时便填写/root/database/即可
-    DB_PATH = 'C:/Users/Administrator/Desktop/res/'
+    DB_PATH = ''
 
     # 是否启用互通
-    ENABLE_COM = True
+    ENABLE_COM = False
 
 
 # --------------------充值/卡密相关----------------
@@ -37,7 +38,7 @@ class auth_config(object):
     NEW_GROUP_DAYS = 1
 
     # 到期前的多少天开始提醒, 设置为0时将不会提醒
-    REMIND_BRFORE_EXPIRED = 1
+    REMIND_BRFORE_EXPIRED = 2
 
     # 到期后多少天退群, 仅当配置AUTO_LEAVE为True是此项有效, 设置为0则立即退群
     LEAVE_AFTER_DAYS = 3
@@ -78,7 +79,7 @@ class auth_config(object):
 
     # 提醒授权即将过期的发言, 在支持变量替换前不生效
     REMIND_MSG = '''
-    本群授权即将到期.如果续费请找1499049630
+    本群授权即将到期.续费请找1499049630
     '''.strip()
 
     REG_HELP_GROUP = '''
