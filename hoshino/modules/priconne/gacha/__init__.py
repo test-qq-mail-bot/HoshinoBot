@@ -24,7 +24,7 @@ sv_help = '''
 '''.strip()
 sv = Service('gacha', help_=sv_help, bundle='pcr娱乐')
 jewel_limit = DailyNumberLimiter(15000)
-tenjo_limit = DailyNumberLimiter(2)
+tenjo_limit = DailyNumberLimiter(1)
 
 JEWEL_EXCEED_NOTICE = f'别抽力别抽力，您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
 TENJO_EXCEED_NOTICE = f'真当您是母猪了？您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
@@ -276,10 +276,10 @@ async def gacha_300(bot, ev: CQEvent):
     #await silence(ev, silence_time)
 
 
-@sv.on_prefix(['氪金','课金','充值','充钱'])
+@sv.on_prefix(['氪金','课金','充钱'])
 async def kakin(bot, ev: CQEvent):
     if not priv.check_priv(ev, priv.ADMIN):
-        await bot.send(ev, '您的权限不足！请联系群管哦~')
+        await bot.send(ev, '您的权限不足！请联系群管氪金哦~')
         return
     count = 0
     for m in ev.message:

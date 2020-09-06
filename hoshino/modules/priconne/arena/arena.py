@@ -7,6 +7,8 @@ from hoshino import aiorequests, config, util
 
 from .. import chara
 from . import sv
+from . import data
+from .db import JijianCounter
 
 try:
     import ujson as json
@@ -22,6 +24,7 @@ DB is a dict like: { 'md5_id': {'like': set(qq), 'dislike': set(qq)} }
 '''
 DB_PATH = os.path.expanduser('~/.hoshino/arena_db.json')
 DB = {}
+jijian = JijianCounter()
 try:
     with open(DB_PATH, encoding='utf8') as f:
         DB = json.load(f)
@@ -111,26 +114,42 @@ def __get_auth_key():
 
 async def do_query(id_list, user_id, region=1):
     id_list = [ x * 100 + 1 for x in id_list ]
-    header = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36',
-        'authorization': __get_auth_key()
-    }
-    payload = {"_sign": "a", "def": id_list, "nonce": "a", "page": 1, "sort": 1, "ts": int(time.time()), "region": region}
-    logger.debug(f'Arena query {payload=}')
-    try:
-        resp = await aiorequests.post('https://api.pcrdfans.com/x/v1/search', headers=header, json=payload, timeout=10)
-        res = await resp.json()
-        logger.debug(f'len(res)={len(res)}')
-    except Exception as e:
-        logger.exception(e)
-        return None
+    attack = ",".join(str(v) for v in id_list)
+    result_list = jijian.get_attack(attack)
+    if result_list is None:
+        header = {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36',
+            'authorization': __get_auth_key()
+        }
+        payload = {"_sign": "a", "def": id_list, "nonce": "a", "page": 1, "sort": 1, "ts": int(time.time()), "region": region}
+        logger.debug(f'Arena query {payload=}')
+        try:
+            resp = await aiorequests.post('https://api.pcrdfans.com/x/v1/search', headers=header, json=payload, timeout=10)
+            res = await resp.json()
+            logger.debug(f'len(res)={len(res)}')
+        except Exception as e:
+            logger.exception(e)
+            return None
 
-    if res['code']:
-        logger.error(f"Arena query failed.\nResponse={res}\nPayload={payload}")
-        return None
+        if res['code']:
+            code = int(res['code'])
+            reason = data.ERROR_CODE[code]
+            logger.error(f"Arena query failed.\nResponse={res}\nPayload={payload}")
+            return f'Arena query failed.\nCode={code}\nReason={reason}'
+
+        result_list = res['data']['result']
+        result = ','.join(str(v) for v in result_list)
+        jijian.add_attack(attack, result)
+        sv.logger.info('[do_query INFO]:在线查询')
+    else:
+        result_list = str(result_list)
+        result_list = eval(result_list)
+        result_list = eval(result_list[0])
+        sv.logger.info('[do_query INFO]:本地缓存')
 
     ret = []
-    for entry in res['data']['result']:
+    index = 0
+    for entry in result_list:
         eid = entry['id']
         likes = get_likes(eid)
         dislikes = get_dislikes(eid)
@@ -143,7 +162,7 @@ async def do_query(id_list, user_id, region=1):
             'my_down': len(dislikes),
             'user_like': 1 if user_id in likes else -1 if user_id in dislikes else 0
         })
-
+        index += 1
     return ret
 
 

@@ -8,6 +8,7 @@ from hoshino.typing import *
 from hoshino.util import FreqLimiter, concat_pic, pic2b64
 
 from .. import chara
+from . import data
 
 sv_help = '''
 [怎么拆] 接防守队角色名 查询竞技场解法
@@ -20,7 +21,7 @@ from . import arena
 
 lmt = FreqLimiter(5)
 
-aliases = ('怎么拆', '怎么解', '怎么打', '如何拆', '如何解', '如何打', 'jjc查询')
+aliases = ('怎么拆', '怎么解', '怎么打', '如何拆', '如何解', '如何打', '怎麼拆', '怎麼解', '怎麼打', 'jjc查询', 'jjc查詢')
 aliases_b = tuple('b' + a for a in aliases) + tuple('B' + a for a in aliases)
 aliases_tw = tuple('台' + a for a in aliases)
 aliases_jp = tuple('日' + a for a in aliases)
@@ -67,7 +68,7 @@ async def _arena_query(bot, ev: CQEvent, region: int):
     if len(defen) > 5:
         await bot.finish(ev, '编队不能多于5名角色', at_sender=True)
     if len(defen) < 5:
-        await bot.finish(ev, '由于数据库限制，少于5名角色的检索条件请移步pcrdfans.com进行查询', at_sender=True)
+        await bot.finish(ev, '编队不能少于5名角色', at_sender=True)
     if len(defen) != len(set(defen)):
         await bot.finish(ev, '编队中含重复角色', at_sender=True)
     if any(chara.is_npc(i) for i in defen):
@@ -75,27 +76,27 @@ async def _arena_query(bot, ev: CQEvent, region: int):
     if 1004 in defen:
         await bot.send(ev, '\n⚠️您正在查询普通版炸弹人\n※万圣版可用万圣炸弹人/瓜炸等别称', at_sender=True)
 
+    defen.sort()
+
     # 执行查询
-    sv.logger.info('Doing query...')
+    # sv.logger.info('Doing query...')
     res = await arena.do_query(defen, uid, region)
-    sv.logger.info('Got response!')
+    # sv.logger.info('Got response!')
 
     # 处理查询结果
-    if res is None:
-        await bot.finish(ev, '查询出错，请联系维护组调教\n请先移步pcrdfans.com进行查询', at_sender=True)
+    if isinstance(res, str):
+        await bot.finish(ev, f'每天的14到16点是高峰时期\n作业网限制了机器人查询\n如果不是高峰期间.请再次查询\n如果多次查询失败，请先移步 https://pcrdfans.com 进行查询\n并联系维护组,{res}', at_sender=True)
     if not len(res):
         await bot.finish(ev, '抱歉没有查询到解法\n※没有作业说明随便拆 发挥你的想象力～★\n作业上传请前往pcrdfans.com', at_sender=True)
     res = res[:min(6, len(res))]    # 限制显示数量，截断结果
 
     # 发送回复
-    sv.logger.info('Arena generating picture...')
+    # sv.logger.info('Arena generating picture...')
     atk_team = [ chara.gen_team_pic(entry['atk']) for entry in res ]
     atk_team = concat_pic(atk_team)
     atk_team = pic2b64(atk_team)
     atk_team = str(MessageSegment.image(atk_team))
-    sv.logger.info('Arena picture ready!')
-    # 纯文字版
-    # atk_team = '\n'.join(map(lambda entry: ' '.join(map(lambda x: f"{x.name}{x.star if x.star else ''}{'专' if x.equip else ''}" , entry['atk'])) , res))
+    # sv.logger.info('Arena picture ready!')
 
     details = [ " ".join([
         f"赞{e['up']}+{e['my_up']}" if e['my_up'] else f"赞{e['up']}",
@@ -120,9 +121,9 @@ async def _arena_query(bot, ev: CQEvent, region: int):
         msg.append('※使用"b怎么拆"或"台怎么拆"可按服过滤')
     msg.append('Support by pcrdfans_com')
 
-    sv.logger.debug('Arena sending result...')
+    # sv.logger.debug('Arena sending result...')
     await bot.send(ev, '\n'.join(msg))
-    sv.logger.debug('Arena result sent!')
+    # sv.logger.debug('Arena result sent!')
 
 
 @sv.on_prefix('点赞')
@@ -148,3 +149,26 @@ async def _arena_feedback(bot, ev: CQEvent, action:int):
     except KeyError:
         await bot.finish(ev, '无法找到作业id！您只能评价您最近查询过的作业', at_sender=True)
     await bot.send(ev, '感谢您的反馈！', at_sender=True)
+
+
+def get_atk_id(chara_list):
+    res = ''
+    for v in chara_list:
+        res += f'{v.id},'
+    res_len = len(res) - 1
+    res = res[0:res_len]
+    return res
+
+
+@sv.on_fullmatch('查询jjc错误码')
+async def query_error_code(bot, event):
+    code = data.ERROR_CODE
+    res = ''
+    for index in code:
+        res += f'{index}:{code[index]}\n'
+    res = res.strip()
+    msg = f'''
+常见错误码如下：
+{res}
+'''.strip()
+    await bot.send(event, msg)
