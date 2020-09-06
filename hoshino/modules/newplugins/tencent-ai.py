@@ -10,7 +10,7 @@ import aiohttp
 from nonebot import get_bot
 
 from hoshino.service import Service
-sv = Service('tencent_ai', help_='腾讯ai')
+sv = Service('tencent-ai', help_='腾讯ai')
 
 try:
     import ujson as json
