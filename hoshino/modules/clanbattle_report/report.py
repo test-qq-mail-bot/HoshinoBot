@@ -14,7 +14,7 @@ import matplotlib.font_manager as fm
 from PIL import Image,ImageFont,ImageDraw
 import math
 
-lmt = FreqLimiter(600)   #冷却时间60秒
+lmt = FreqLimiter(60)   #冷却时间60秒
 bg_resign = 'resign.jpg'
 bg_report = 'report.jpg'
 font_path = os.path.join(os.path.dirname(__file__), 'SimHei.ttf')
