@@ -2,6 +2,7 @@ import os
 import peewee as pw
 import requests
 import functools
+import hashlib
 from PIL import Image
 from io import BytesIO
 from zhconv import convert
@@ -12,6 +13,17 @@ from hoshino.util import pic2b64
 logger = log.new_logger('wiki')
 
 UNKNOWN = 1000
+
+def get_file_md5():
+    myhash = hashlib.md5()
+    f = open(os.path.join(os.path.dirname(__file__), 'data.db'), "rb")
+    while True:
+        b = f.read(8096)
+        if not b:
+            break
+        myhash.update(b)
+    f.close()
+    return myhash.hexdigest()
 
 def custom_sorted(x,y):
     order = ['必殺技','必殺技+','技能1','專武強化技能1','技能2','EX技能','EX技能+']
@@ -62,19 +74,6 @@ def get_info(id):
     query = Info.get(Info.id==id)
     msg = f'\n公會: {query.guild}\n生日: {query.birthday}\n年齡: {query.age}\n身高: {query.height}\n體重: {query.weight}\n血型: {query.blood_type}\n種族: {query.race}\n喜好: {query.hobby}\nCV: {query.cv}\n簡介: {query.introduce}'
     return convert(msg, 'zh-hans')
-
-def get_cv(cv):
-    cv = convert(cv, 'zh-tw')
-    query = Info.select().where(Info.cv==cv)
-    if len(query) == 0:
-        msg = f"没有找到{cv}扮演的角色"
-    else:
-        msg = f"{cv} 的扮演角色有："
-        for i in query:
-            msg += "\n"
-            msg += i.name
-    return convert(msg, "zh-hans")
-
 
 def get_skill(id):
     loop = Info.get(Info.id==id)
@@ -215,3 +214,16 @@ class Props(pw.Model):
     class Meta:
         database = db
         table_name = 'props'
+        
+def get_cv(cv):
+    cv = convert(cv, 'zh-tw')
+    query = Info.select().where(Info.cv==cv)
+    if len(query) == 0:
+        msg = f"没有找到{cv}扮演的角色"
+    else:
+        msg = f"{cv} 的扮演角色有："
+        for i in query:
+            msg += "\n"
+            msg += i.name
+    return convert(msg, "zh-hans")
+        

@@ -58,4 +58,5 @@ MODULES_ON = {
     'eqa',#你问我答
     'hourcallyao-cn',#国服-买药小助手
     'hourcallyao-jp',#日服-买药小助手
+    'pcrmemorygames',#公主连结记忆小游戏
 }

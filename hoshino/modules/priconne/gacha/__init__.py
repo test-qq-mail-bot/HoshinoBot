@@ -16,17 +16,18 @@ except:
     import json
 
 sv_help = '''
-[妈十连] 转蛋模拟
-[妈来发单抽] 转蛋模拟
-[妈来一井] 4w5钻！
+[@Bot十连] 转蛋模拟
+[@Bot来发单抽] 转蛋模拟
+[@Bot来一井] 4w5钻！
 [查看卡池] 模拟卡池&出率
 [切换卡池] 更换模拟卡池
+[氪金@某人] 为某人氪金, 恢复抽卡次数
 '''.strip()
 sv = Service('gacha', help_=sv_help, bundle='pcr娱乐')
 jewel_limit = DailyNumberLimiter(15000)
 tenjo_limit = DailyNumberLimiter(1)
 
-JEWEL_EXCEED_NOTICE = f'别抽力别抽力，您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
+JEWEL_EXCEED_NOTICE = f'您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
 TENJO_EXCEED_NOTICE = f'真当您是母猪了？您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
 POOL = ('MIX', 'JP', 'TW', 'BL')
 DEFAULT_POOL = POOL[0]
@@ -46,8 +47,8 @@ def dump_pool_config():
 
 
 gacha_10_aliases = ('抽十连', '十连', '十连！', '十连抽', '来个十连', '来发十连', '来次十连', '抽个十连', '抽发十连', '抽次十连', '十连扭蛋', '扭蛋十连',
-                    '10连', '10连！', '10连抽', '来个10连','来十连')
-gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋','单发','来单发')
+                    '10连', '10连！', '10连抽', '来个10连')
+gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋')
 gacha_300_aliases = ('抽一井', '来一井', '来发井', '抽发井', '天井扭蛋', '扭蛋天井')
 
 @sv.on_fullmatch(('卡池资讯', '查看卡池', '看看卡池', '康康卡池','看看up', '看看UP'))
@@ -171,13 +172,13 @@ async def gacha_1(bot, ev: CQEvent):
     gid = str(ev.group_id)
     gacha = Gacha(_group_pool[gid])
     chara, hiishi = gacha.gacha_one(gacha.up_prob, gacha.s3_prob, gacha.s2_prob)
-    silence_time = hiishi * 60
+    # silence_time = hiishi * 60
 
     res = f'{chara.name} {"★"*chara.star}'
     res = f'{chara.icon.cqcode} {res}'
 
-    #await silence(ev, silence_time)
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n想切换卡池的话,请发 选择卡池', at_sender=True)
+    # await silence(ev, silence_time)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}', at_sender=True)
 
 
 @sv.on_prefix(gacha_10_aliases, only_to_me=True)
@@ -190,7 +191,7 @@ async def gacha_10(bot, ev: CQEvent):
     gid = str(ev.group_id)
     gacha = Gacha(_group_pool[gid])
     result, hiishi = gacha.gacha_ten()
-    silence_time = hiishi * 6 if hiishi < SUPER_LUCKY_LINE else hiishi * 60
+    # silence_time = hiishi * 6 if hiishi < SUPER_LUCKY_LINE else hiishi * 60
 
 
     res1 = chara.gen_team_pic(result[:5], star_slot_verbose=False)
@@ -206,7 +207,7 @@ async def gacha_10(bot, ev: CQEvent):
 
     if hiishi >= SUPER_LUCKY_LINE:
         await bot.send(ev, '恭喜海豹！おめでとうございます！')
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n想切换卡池的话,请发 选择卡池', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n', at_sender=True)
     #await silence(ev, silence_time)
 
 
@@ -242,9 +243,7 @@ async def gacha_300(bot, ev: CQEvent):
     msg = [
         f"\n素敵な仲間が増えますよ！ {res}",
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
-        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！",
-        f"如果想再抽,请叫管理员以上的权限发(氪金+@您本人)",
-        f"想切换卡池的话,请发 选择卡池"         
+        f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！"
     ]
 
     if up == 0 and s3 == 0:
@@ -276,7 +275,7 @@ async def gacha_300(bot, ev: CQEvent):
     #await silence(ev, silence_time)
 
 
-@sv.on_prefix(['氪金','课金','充钱'])
+@sv.on_prefix('氪金')
 async def kakin(bot, ev: CQEvent):
     if not priv.check_priv(ev, priv.ADMIN):
         await bot.send(ev, '您的权限不足！请联系群管氪金哦~')
