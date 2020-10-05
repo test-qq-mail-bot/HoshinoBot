@@ -178,7 +178,7 @@ async def gacha_1(bot, ev: CQEvent):
     res = f'{chara.icon.cqcode} {res}'
 
     # await silence(ev, silence_time)
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n※发送"查看卡池",可以查看当前up的角色\n{res}', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n发送"查看卡池",可以查看当前up的角色\n{res}', at_sender=True)
 
 
 @sv.on_prefix(gacha_10_aliases, only_to_me=True)
@@ -207,7 +207,7 @@ async def gacha_10(bot, ev: CQEvent):
 
     if hiishi >= SUPER_LUCKY_LINE:
         await bot.send(ev, '恭喜海豹！おめでとうございます！')
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n※发送"查看卡池",可以查看当前up的角色\n{res}\n', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n发送"查看卡池",可以查看当前up的角色\n{res}\n', at_sender=True)
     #await silence(ev, silence_time)
 
 
@@ -242,7 +242,7 @@ async def gacha_300(bot, ev: CQEvent):
 
     msg = [
         f"\n素敵な仲間が増えますよ！ {res}",
-        f"\n发送"选择卡池"可切换卡池\n※发送"查看卡池",可以查看当前up的角色",
+        f'\n发送"选择卡池"可切换卡池\n发送"查看卡池",可以查看当前up的角色',
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
         f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！"
     ]
