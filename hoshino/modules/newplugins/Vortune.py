@@ -78,7 +78,7 @@ async def drawing(model, userid):
         'text': absPath + '/font/sakura.ttf'
     }
     imgPath = await randomBasemap()
-    imgsavePath = absPath + '/out/userid_' + str(userid) + '.png'
+    imgsavePath = absPath + '/out/userid_' + str(userid) + '.jpg'
     if model != DEFAULT:
         imgPath = absPath + '/img/' + model
     img = Image.open(imgPath)
@@ -87,17 +87,17 @@ async def drawing(model, userid):
     text = await copywriting()
     title = await getTitle(text)
     text = text['content']
-    font_size = 55
+    font_size = 45
     color = '#F5F5F5'
-    image_font_center = (230, 165)
+    image_font_center = (140, 99)
     ttfront = ImageFont.truetype(fontPath['title'], font_size)
     font_length = ttfront.getsize(title)
     draw.text((image_font_center[0]-font_length[0]/2, image_font_center[1]-font_length[1]/2),
                 title, fill=color,font=ttfront)
     # Text rendering
-    font_size = 40
+    font_size = 25
     color = '#323232'
-    image_font_center = [230, 500]
+    image_font_center = [140, 297]
     ttfront = ImageFont.truetype(fontPath['text'], font_size)
     result = await decrement(text)
     if not result[0]:
