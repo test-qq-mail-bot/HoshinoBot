@@ -40,7 +40,7 @@ MODULES_ON = {
     ##'pcrclanbattle',#公会战
     'priconne',#抽卡,rank表等
     ##'setu',    
-    'translate',#翻译
+    ##'translate',#翻译
     ##'twitter',#推特
     'gonghui-nowtime',#工会战催刀图
     'nowtime',#报时
@@ -59,4 +59,6 @@ MODULES_ON = {
     'hourcallyao-cn',#国服-买药小助手
     'hourcallyao-jp',#日服-买药小助手
     'pcrmemorygames',#公主连结记忆小游戏
+    'pcrmiddaymusic',#公主连结午间音乐
+    'pokemanpcr',#戳机器人集卡小游戏
 }
