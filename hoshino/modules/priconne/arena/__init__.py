@@ -21,6 +21,7 @@ sv_help = '''
 sv = Service('pcr-arena', help_=sv_help, bundle='pcr查询')
 
 from . import arena
+from .reqbot import *
 
 lmt = FreqLimiter(5)
 jijian = JijianCounter()
@@ -108,7 +109,7 @@ async def _arena_query(bot, ev: CQEvent, region: int, refresh=False):
 
     # 处理查询结果
     if isinstance(res, str):
-        await bot.finish(ev, f'每天的14到16点是高峰时期\n作业网限制了机器人查询\n如果不是高峰期间.请再次查询\n如果多次查询失败，请先移步 https://pcrdfans.com 进行查询\n并联系维护组，{res}', at_sender=True)
+        await bot.finish(ev, f'每天的14到16点是高峰时期\n作业网限制了机器人查询\n如果不是高峰期间.请再次查询\n如果多次查询失败，请先移步 https://pcrdfans.com 进行查询\n并联系维护组.\n错误117是高峰期限流量\n错误110是环奈的bug.请再多查几次.或者上网站查{res}', at_sender=True)
     if not len(res):
         await bot.finish(ev, '抱歉没有查询到解法\n※没有作业说明随便拆 发挥你的想象力～★\n作业上传请前往pcrdfans.com', at_sender=True)
     res = res[:min(6, len(res))]    # 限制显示数量，截断结果
@@ -195,18 +196,23 @@ def get_atk_id(chara_list):
     return res
 
 
-@sv.on_fullmatch('查询jjc错误码')
+@sv.on_prefix('查询jjc错误码')
 async def query_error_code(bot, event):
     code = data.ERROR_CODE
     res = ''
-    for index in code:
-        res += f'{index}:{code[index]}\n'
-    res = res.strip()
-    msg = f'''
+    msg = event.message.extract_plain_text()
+    if not msg:
+        for index in code:
+            res += f'{index}:{code[index]}\n'
+        res = res.strip()
+        res = f'''
 常见错误码如下：
 {res}
 '''.strip()
-    await bot.send(event, msg)
+    else:
+        msg = int(msg)
+        res = code[msg]
+    await bot.send(event, res)
 
 
 @sv.on_prefix('刷新作业')

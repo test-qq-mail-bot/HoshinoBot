@@ -25,10 +25,10 @@ sv_help = '''
 '''.strip()
 sv = Service('gacha', help_=sv_help, bundle='pcr娱乐')
 jewel_limit = DailyNumberLimiter(15000)
-tenjo_limit = DailyNumberLimiter(1)
+tenjo_limit = DailyNumberLimiter(5)
 
 JEWEL_EXCEED_NOTICE = f'您今天已经抽过{jewel_limit.max}钻了，欢迎明早5点后再来！'
-TENJO_EXCEED_NOTICE = f'真当您是母猪了？您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
+TENJO_EXCEED_NOTICE = f'您今天已经抽过{tenjo_limit.max}张天井券了，欢迎明早5点后再来！'
 POOL = ('MIX', 'JP', 'TW', 'BL')
 DEFAULT_POOL = POOL[0]
 
@@ -178,7 +178,7 @@ async def gacha_1(bot, ev: CQEvent):
     res = f'{chara.icon.cqcode} {res}'
 
     # await silence(ev, silence_time)
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n发送"查看卡池",可以查看当前up的角色\n如果想要再抽奖.请叫群主或管理员发"氪金+@你本人"\n{res}', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}', at_sender=True)
 
 
 @sv.on_prefix(gacha_10_aliases, only_to_me=True)
@@ -207,7 +207,7 @@ async def gacha_10(bot, ev: CQEvent):
 
     if hiishi >= SUPER_LUCKY_LINE:
         await bot.send(ev, '恭喜海豹！おめでとうございます！')
-    await bot.send(ev, f'素敵な仲間が増えますよ！\n发送"选择卡池"可切换卡池\n发送"查看卡池",可以查看当前up的角色\n如果想要再抽奖.请叫群主或管理员发"氪金+@你本人"\n{res}\n', at_sender=True)
+    await bot.send(ev, f'素敵な仲間が増えますよ！\n{res}\n', at_sender=True)
     #await silence(ev, silence_time)
 
 
@@ -242,9 +242,6 @@ async def gacha_300(bot, ev: CQEvent):
 
     msg = [
         f"\n素敵な仲間が増えますよ！ {res}",
-        f'发送"选择卡池"可切换卡池',
-        f'发送"查看卡池",可以查看当前up的角色',
-        f'如果想要再抽奖.请叫群主或管理员发"氪金+@你本人"',
         f"★★★×{up+s3} ★★×{s2} ★×{s1}",
         f"获得记忆碎片×{100*up}与女神秘石×{50*(up+s3) + 10*s2 + s1}！\n第{result['first_up_pos']}抽首次获得up角色" if up else f"获得女神秘石{50*(up+s3) + 10*s2 + s1}个！"
     ]
@@ -278,11 +275,10 @@ async def gacha_300(bot, ev: CQEvent):
     #await silence(ev, silence_time)
 
 
-@sv.on_prefix(['氪金','课金','充值','充钱'])
+@sv.on_prefix('氪金')
 async def kakin(bot, ev: CQEvent):
-    if not priv.check_priv(ev, priv.ADMIN):
-        await bot.send(ev, '您的权限不足！请联系群管哦~')
-        return
+    #if ev.user_id not in bot.config.SUPERUSERS:
+    #    return
     count = 0
     for m in ev.message:
         if m.type == 'at' and m.data['qq'] != 'all':

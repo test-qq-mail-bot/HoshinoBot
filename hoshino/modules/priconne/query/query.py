@@ -11,6 +11,7 @@ p5 = R.img('priconne/quick/日服/2.png').cqcode
 p6 = R.img('priconne/quick/日服/3.png').cqcode
 p7 = R.img('priconne/quick/国服/1.png').cqcode
 p8 = R.img('priconne/quick/国服/2.png').cqcode
+#p9 = R.img('priconne/quick/国服/3.png').cqcode
 
 @sv.on_rex(r'^(\*?([日台国陆b])服?([前中后]*)卫?)?rank(表|推荐|指南)?$')
 async def rank_sheet(bot, ev):
@@ -41,7 +42,7 @@ async def rank_sheet(bot, ev):
         #await util.silence(ev, 60)
 
     elif is_cn:
-        msg.append(f'※不定期搬运自lucky213\n※NGA有原图及原文档\n rank表：\n{p7}{p8}')
+        msg.append(f'※不定期搬运自席巴鸽\n※B站有原图及原文档\n rank表：\n{p7}{p8}')
         await bot.send(ev, '\n'.join(msg), at_sender=True)        
         
 
@@ -56,7 +57,7 @@ async def say_arina_database(bot, ev):
     await bot.send(ev, '公主连接Re:Dive 竞技场编成数据库\n日文：https://nomae.net/arenadb \n中文：https://pcrdfans.com/battle')
 
 
-OTHER_KEYWORDS = '【日rank】【台rank】【b服rank】【jjc作业网】【黄骑充电表】【一个顶俩】【角色站位表】【日程表】'
+OTHER_KEYWORDS = '【日rank】【台rank】【b服rank】【jjc作业网】【黄骑充电表】【一个顶俩】【角色站位表】【日程表】【台服千里眼】【国服万里眼】'
 PCR_SITES = f'''
 【繁中wiki/兰德索尔图书馆】pcredivewiki.tw
 【日文wiki/GameWith】gamewith.jp/pricone-re
@@ -86,6 +87,7 @@ BCR_SITES = f'''
 【公主连结公会战工具】https://www.bigfun.cn/tools/pcrteam
 【论坛/NGA社区】https://bbs.nga.cn/thread.php?fid=-10308342
 【Bilibili站点WIKI】https://wiki.biligame.com/pcr/%E9%A6%96%E9%A1%B5
+【国服未来活动和奖池】https://nga.178.com/read.php?tid=21478254&fav=a1b903bd
 ===其他查询关键词===
 {OTHER_KEYWORDS}
 ※日台服速查请输入【pcr速查】
@@ -132,4 +134,11 @@ async def stand_position(bot,ev):
 	await bot.send(ev,R.img('图片/角色站位表/3.png').cqcode)
 	await bot.send(ev,R.img('图片/角色站位表/4.png').cqcode, at_sender=True)
 
-    
+   
+@sv.on_fullmatch(('千里眼','台服即将出','台服未来出','台服角色','台服千里眼'))
+async def qian_li_yan(bot,ev):
+	await bot.send(ev,R.img('图片/千万里眼/1.png').cqcode, at_sender=True)
+	
+@sv.on_fullmatch(('万里眼','国服即将出','国服未来出','国服角色','国服千里眼','国服万里眼'))
+async def wan_li_yan(bot,ev):
+	await bot.send(ev,R.img('图片/千万里眼/2.png').cqcode, at_sender=True)
