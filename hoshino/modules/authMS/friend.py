@@ -1,4 +1,11 @@
-from . import *
+from nonebot import on_request
+
+import hoshino
+
+from .constant import config
+from . import util
+
+
 
 @on_request('friend')
 async def friend_approve(session):
@@ -9,5 +16,3 @@ async def friend_approve(session):
     else:
         util.log(f'收到来自{session.event.user_id}的好友请求','friend_add')
         hoshino.logger.info(f'收到来自{session.event.user_id}的好友请求')
-    
-    
