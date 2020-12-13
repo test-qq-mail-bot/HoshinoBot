@@ -25,7 +25,7 @@ class auth_config(object):
     DB_PATH = 'C:/Users/Administrator/Desktop/res/'
 
     # 是否启用互通
-    ENABLE_COM = True
+    ENABLE_COM = False
 
 
 # --------------------充值/卡密相关----------------
@@ -51,7 +51,7 @@ class auth_config(object):
     REMIND_BRFORE_EXPIRED = 2
 
     # 到期后多少天退群, 仅当配置AUTO_LEAVE为True是此项有效, 设置为0则立即退群
-    LEAVE_AFTER_DAYS = 3
+    LEAVE_AFTER_DAYS = 1
 
     # 允许的最大群人数, 3000为不限制, 因为QQ群最大人数为3000
     # 进群后, 立刻检测一次人数（因为进群邀请不包含人数信息）

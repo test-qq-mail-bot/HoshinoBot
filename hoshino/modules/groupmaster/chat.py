@@ -98,9 +98,9 @@ async def say_baba(bot, ev):
 async def zaoan(bot, ev):
     await bot.send(ev, '早上好，一束阳光照在身，祝你天天都开心，梦想可以变成真！加油呀', at_sender=True)
 
-@sv.on_keyword(('晚'), only_to_me=True)
-async def wanan(bot, ev):
-    await bot.send(ev, '晚安~祝你有个好梦~', at_sender=True)
+#@sv.on_keyword(('晚'), only_to_me=True)
+#async def wanan(bot, ev):
+#    await bot.send(ev, '晚安~祝你有个好梦~', at_sender=True)
 
 
 @sv.on_keyword(('我爱你'), only_to_me=True)
@@ -115,7 +115,8 @@ async def baobao(bot, ev):
 
 @sv.on_keyword(('举高高','生日'))
 async def jugaogao(bot, ev):
-    await bot.send(ev, R.img('举高高.jpg').cqcode)
+	if random.random() < 0.10:
+		await bot.send(ev, R.img('举高高.jpg').cqcode)
 
 @sv.on_keyword(('??', '问题'))
 async def wenhao(bot, ev):

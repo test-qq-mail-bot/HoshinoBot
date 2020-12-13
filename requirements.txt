@@ -20,4 +20,5 @@ filetype==1.0.7
 selenium
 peewee~=3.11.0
 ujson
+html2text>=2020.1.16
 python-Levenshtein~=0.12.0

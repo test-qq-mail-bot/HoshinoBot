@@ -26,7 +26,7 @@ comm:
   answer_delete_all: 清空回答
 
   # 显示个人设置的问答
-  show_question: 本人的问答
+  show_question: 问答
 
   #显示所有的问答
   show_question_list:
